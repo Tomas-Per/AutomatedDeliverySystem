@@ -1,0 +1,7 @@
+{
+  "name": "ADS_UI",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
