@@ -4,7 +4,8 @@ package lt.vu.ads.models;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter@Setter
+@Getter
+@Setter
 public class Address {
 
     private Long id;
