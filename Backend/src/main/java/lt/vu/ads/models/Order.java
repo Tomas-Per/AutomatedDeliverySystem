@@ -41,6 +41,8 @@ public class Order {
 
     private Courier courier;
 
+    private OrderInfo orderInfo;
+
 
 
 
