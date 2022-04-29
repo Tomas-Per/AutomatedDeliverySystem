@@ -22,11 +22,11 @@ public class Order {
     @Column(nullable = false)
     private int orderCode;
 
-    @Column(columnDefinition="BOOLEAN DEFAULT false")
-    private boolean isExpress;
+    @Column
+    private boolean isExpress = false;
 
-    @Column(columnDefinition="BOOLEAN DEFAULT false")
-    private boolean isFragile;
+    @Column
+    private boolean isFragile = false;
 
     @Enumerated(EnumType.STRING)
     private Size size;
@@ -65,5 +65,5 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderInfo> orderInfoList;
-    
+
 }
