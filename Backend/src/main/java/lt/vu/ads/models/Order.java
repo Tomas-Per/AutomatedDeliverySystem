@@ -10,6 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Table(name = "`order`")
 @Entity
 public class Order {
 
@@ -39,13 +40,15 @@ public class Order {
     @ManyToOne
     private User sourceUser;
 
-    @Embedded
+    @OneToOne
+    @JoinColumn(name = "source_address_id")
     private Address sourceAddress;
 
     @ManyToOne
     private User destinationUser;
 
-    @Embedded
+    @OneToOne
+    @JoinColumn(name = "destination_address_id")
     private Address destinationAddress;
 
     @Column(nullable = false)
@@ -62,8 +65,5 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderInfo> orderInfoList;
-
-
-
-
+    
 }

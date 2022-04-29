@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Table
 @AttributeOverrides({
         @AttributeOverride(name = "email", column = @Column(nullable = false)),
         @AttributeOverride(name = "password", column = @Column(nullable = false)),

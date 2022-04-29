@@ -8,13 +8,14 @@ import java.util.Date;
 
 @Getter
 @Setter
+@Table
 @Entity
 public class OrderInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long idd;
+    private Long id;
 
     @Column(nullable = false)
     private Date date;
