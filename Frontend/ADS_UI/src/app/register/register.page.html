@@ -32,10 +32,10 @@
     <ion-input type="text" required></ion-input>
   </ion-item>
 
-  <ion-button type="submit" color="primary" shape="round" class="registerBtn">Sign Up</ion-button>
+  <ion-button type="submit" color="primary" shape="round" class="registerBtn" (click)="signUp()">Sign Up</ion-button>
 
   <div class="separator">Or</div>
 
-  <ion-button type="submit" color="secondary" shape="round" class="logInBtn">Log in</ion-button>
+  <ion-button type="submit" color="secondary" shape="round" class="logInBtn" (click)="navigateToLogin()">Log in</ion-button>
 
 </ion-content>
