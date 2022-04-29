@@ -1,6 +1,8 @@
 package lt.vu.ads.controllers;
 
+import lt.vu.ads.models.Address;
 import lt.vu.ads.models.Order;
+import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,12 @@ import java.util.List;
 public class OrderController {
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    AddressController addressController;
 
     @GetMapping("/orders")
     public List<Order> getAllOrders(){
@@ -42,8 +50,42 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public Order createOrder(@RequestBody Order order)
+    public Order createOrder(@RequestBody Order order) throws Exception
     {
+
+        Address destination_address = addressRepository.findByCityAndStreetAndHouseNumberAndCountryAndPostalCode(
+                order.getDestinationAddress().getCity(),
+                order.getDestinationAddress().getStreet(),
+                order.getDestinationAddress().getHouseNumber(),
+                order.getDestinationAddress().getCountry(),
+                order.getDestinationAddress().getPostalCode()
+        );
+        Address source_address = addressRepository.findByCityAndStreetAndHouseNumberAndCountryAndPostalCode(
+                order.getSourceAddress().getCity(),
+                order.getSourceAddress().getStreet(),
+                order.getSourceAddress().getHouseNumber(),
+                order.getSourceAddress().getCountry(),
+                order.getSourceAddress().getPostalCode()
+        );
+
+        if (destination_address == source_address){
+            throw new Exception("Order's source and destinations addresses are not allowed :: ");
+        }
+
+        if (destination_address != null){
+            order.setDestinationAddress(addressRepository.findOneById(destination_address.getId()));
+        }
+        else{
+            addressController.createAddress(order.getDestinationAddress());
+        }
+
+        if (source_address != null){
+            order.setSourceAddress(addressRepository.findOneById(source_address.getId()));
+        }
+        else{
+            addressController.createAddress(order.getSourceAddress());
+        }
+
         return orderRepository.save(order);
     }
 

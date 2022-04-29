@@ -39,14 +39,14 @@ public class Order {
     @ManyToOne
     private User sourceUser;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "source_address_id")
     private Address sourceAddress;
 
     @ManyToOne
     private User destinationUser;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "destination_address_id")
     private Address destinationAddress;
 
