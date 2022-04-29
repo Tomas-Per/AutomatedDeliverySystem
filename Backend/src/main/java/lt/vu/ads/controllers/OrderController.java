@@ -1,6 +1,5 @@
 package lt.vu.ads.controllers;
 
-import lt.vu.ads.exceptions.ResourceNotFoundException;
 import lt.vu.ads.models.Order;
 import lt.vu.ads.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,25 @@ public class OrderController {
 
     @GetMapping("/order/{id}")
     public ResponseEntity < Order > getOrderById(@PathVariable(value = "id") Long orderId)
-            throws ResourceNotFoundException {
+            throws Exception {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found for this id :: " + orderId));
+                .orElseThrow(() -> new Exception("Order not found for this id :: " + orderId));
         return ResponseEntity.ok().body(order);
+    }
+
+    @PutMapping("/order/{id}")
+    public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
+                                                       @RequestBody Order orderDetails) throws Exception {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new Exception("Order not found for this id :: " + orderId));
+
+        if(order.getConvenientArrivalTimeTo().before(order.getConvenientArrivalTimeFrom())) {
+            throw new Exception("Order's time is not allowed :: ");
+        }
+        order.setConvenientArrivalTimeFrom(orderDetails.getConvenientArrivalTimeFrom());
+        order.setConvenientArrivalTimeTo(orderDetails.getConvenientArrivalTimeTo());
+        final Order updatedOrder = orderRepository.save(order);
+        return ResponseEntity.ok(updatedOrder);
     }
 
     @PostMapping("/orders")
