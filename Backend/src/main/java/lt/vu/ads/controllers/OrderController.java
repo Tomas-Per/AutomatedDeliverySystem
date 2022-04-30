@@ -1,9 +1,11 @@
 package lt.vu.ads.controllers;
 
+import lt.vu.ads.exceptions.CustomException;
 import lt.vu.ads.models.Address;
 import lt.vu.ads.models.Order;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
+import lt.vu.ads.service.NumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,31 +30,44 @@ public class OrderController {
 
     @GetMapping("/order/{id}")
     public ResponseEntity < Order > getOrderById(@PathVariable(value = "id") Long orderId)
-            throws Exception {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new Exception("Order not found for this id :: " + orderId));
-        return ResponseEntity.ok().body(order);
-    }
-
-    @PutMapping("/order/{id}")
-    public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
-                                                       @RequestBody Order orderDetails) throws Exception {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new Exception("Order not found for this id :: " + orderId));
-
-        if(order.getConvenientArrivalTimeTo().before(order.getConvenientArrivalTimeFrom())) {
-            throw new Exception("Order's time is not allowed :: ");
+    {
+        Order order = orderRepository.findOneById(orderId);
+        if (order == null){
+            throw new CustomException("Order is not found with id: " + orderId);
         }
-        order.setConvenientArrivalTimeFrom(orderDetails.getConvenientArrivalTimeFrom());
-        order.setConvenientArrivalTimeTo(orderDetails.getConvenientArrivalTimeTo());
-        final Order updatedOrder = orderRepository.save(order);
-        return ResponseEntity.ok(updatedOrder);
+
+        return ResponseEntity.ok().body(order);
+        }
+
+@PutMapping("/order/{id}")
+public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
+                                            @RequestBody Order orderDetails) {
+    Order order = orderRepository.findOneById(orderId);
+    if (order == null){
+        throw new CustomException("Order is not found with id: " + orderId);
     }
+    if(orderDetails.getConvenientArrivalTimeTo() == null || orderDetails.getConvenientArrivalTimeFrom() == null){
+        throw new CustomException("Order time is empty ");
+    }
+    if(orderDetails.getConvenientArrivalTimeTo().before(orderDetails.getConvenientArrivalTimeFrom())) {
+        throw new CustomException("Order's time is not allowed");
+    }
+    order.setConvenientArrivalTimeFrom(orderDetails.getConvenientArrivalTimeFrom());
+    order.setConvenientArrivalTimeTo(orderDetails.getConvenientArrivalTimeTo());
+    final Order updatedOrder = orderRepository.save(order);
+    return ResponseEntity.ok(updatedOrder);
+}
 
     @PostMapping("/orders")
-    public Order createOrder(@RequestBody Order order) throws Exception
+    public Order createOrder(@RequestBody Order order)
     {
+        if(order.getDestinationAddress() == null || order.getSourceAddress() == null){
+            throw new CustomException("Order's source or destinations addresses are empty");
+        }
 
+        if (order.getDestinationAddress() == order.getSourceAddress()){
+            throw new CustomException("Order's source and destinations addresses are not allowed");
+        }
         Address destination_address = addressRepository.findByCityAndStreetAndHouseNumberAndCountryAndPostalCode(
                 order.getDestinationAddress().getCity(),
                 order.getDestinationAddress().getStreet(),
@@ -68,9 +83,8 @@ public class OrderController {
                 order.getSourceAddress().getPostalCode()
         );
 
-        if (destination_address == source_address){
-            throw new Exception("Order's source and destinations addresses are not allowed :: ");
-        }
+        NumberGenerator generator = new NumberGenerator();
+        order.setOrderCode(generator.generateNumber());
 
         if (destination_address != null){
             order.setDestinationAddress(addressRepository.findOneById(destination_address.getId()));

@@ -1,5 +1,6 @@
 package lt.vu.ads.controllers;
 
+import lt.vu.ads.exceptions.CustomException;
 import lt.vu.ads.models.Address;
 import lt.vu.ads.repositories.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class AddressController {
     @GetMapping("/address/{id}")
     public ResponseEntity < Address > getAddressById(@PathVariable(value = "id") Long addressId){
         Address address = addressRepository.findOneById(addressId);
+        if (address == null){
+            throw new CustomException("Address is not found with id: " + addressId);
+        }
         return ResponseEntity.ok().body(address);
     }
     @GetMapping("/address/{city}/{street}/{houseNumber}/{country}/{postalCode}")
@@ -34,14 +38,22 @@ public class AddressController {
             @PathVariable(value = "postalCode") int postalCode)
     {
     Address address = addressRepository.findByCityAndStreetAndHouseNumberAndCountryAndPostalCode(city,street,houseNumber,country,postalCode);
-        return ResponseEntity.ok().body(address);
+        if (address == null){
+            throw new CustomException("Address is not found in database" );
+        }
+    return ResponseEntity.ok().body(address);
     }
 
     @PostMapping("/address")
-    public Address createAddress(@RequestBody Address address) throws Exception
+    public Address createAddress(@RequestBody Address address)
     {
-            if (address == null){
-                throw new Exception("Address is null");
+            if (address.getStreet() == null ||
+                    address.getCity() == null ||
+                    address.getCountry() == null ||
+                    address.getHouseNumber() == null ||
+                    address.getPostalCode() == 0
+            ){
+                throw new CustomException("Address is null");
             }
         return addressRepository.save(address);
     }
