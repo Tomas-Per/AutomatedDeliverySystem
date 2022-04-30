@@ -2,16 +2,12 @@ package lt.vu.ads.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lt.vu.ads.exceptions.CustomException;
-import lt.vu.ads.models.Courier.Courier;
 import lt.vu.ads.models.User.User;
 import lt.vu.ads.models.User.json.UserLoggedInView;
 import lt.vu.ads.models.User.json.UserLoginView;
 import lt.vu.ads.models.User.json.UserRegisterView;
-import lt.vu.ads.repository.CourierRepository;
 import lt.vu.ads.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +32,7 @@ public class UserServiceImpl implements UserService {
                 .email(registerView.getEmail())
                 .password(registerView.getPassword())
                 .build();
+        userRepository.save(user);
         return UserLoggedInView.of(user);
     }
 }

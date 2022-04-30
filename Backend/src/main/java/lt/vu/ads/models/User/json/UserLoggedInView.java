@@ -3,7 +3,6 @@ package lt.vu.ads.models.User.json;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.ads.models.Courier.Courier;
 import lt.vu.ads.models.User.User;
 
 @Getter

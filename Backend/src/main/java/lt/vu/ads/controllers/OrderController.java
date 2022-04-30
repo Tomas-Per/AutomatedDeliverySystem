@@ -39,24 +39,24 @@ public class OrderController {
         return ResponseEntity.ok().body(order);
         }
 
-@PutMapping("/order/{id}")
-public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
-                                            @RequestBody Order orderDetails) {
-    Order order = orderRepository.findOneById(orderId);
-    if (order == null){
-        throw new CustomException("Order is not found with id: " + orderId);
+    @PutMapping("/order/{id}")
+    public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
+                                                @RequestBody Order orderDetails) {
+        Order order = orderRepository.findOneById(orderId);
+        if (order == null){
+            throw new CustomException("Order is not found with id: " + orderId);
+        }
+        if(orderDetails.getConvenientArrivalTimeTo() == null || orderDetails.getConvenientArrivalTimeFrom() == null){
+            throw new CustomException("Order time is empty ");
+        }
+        if(orderDetails.getConvenientArrivalTimeTo().before(orderDetails.getConvenientArrivalTimeFrom())) {
+            throw new CustomException("Order's time is not allowed");
+        }
+        order.setConvenientArrivalTimeFrom(orderDetails.getConvenientArrivalTimeFrom());
+        order.setConvenientArrivalTimeTo(orderDetails.getConvenientArrivalTimeTo());
+        final Order updatedOrder = orderRepository.save(order);
+        return ResponseEntity.ok(updatedOrder);
     }
-    if(orderDetails.getConvenientArrivalTimeTo() == null || orderDetails.getConvenientArrivalTimeFrom() == null){
-        throw new CustomException("Order time is empty ");
-    }
-    if(orderDetails.getConvenientArrivalTimeTo().before(orderDetails.getConvenientArrivalTimeFrom())) {
-        throw new CustomException("Order's time is not allowed");
-    }
-    order.setConvenientArrivalTimeFrom(orderDetails.getConvenientArrivalTimeFrom());
-    order.setConvenientArrivalTimeTo(orderDetails.getConvenientArrivalTimeTo());
-    final Order updatedOrder = orderRepository.save(order);
-    return ResponseEntity.ok(updatedOrder);
-}
 
     @PostMapping("/orders")
     public Order createOrder(@RequestBody Order order)

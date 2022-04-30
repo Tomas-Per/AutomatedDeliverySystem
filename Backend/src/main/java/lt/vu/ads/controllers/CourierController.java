@@ -1,4 +1,4 @@
-package lt.vu.ads.controller;
+package lt.vu.ads.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lt.vu.ads.models.Courier.json.CourierLoggedInView;

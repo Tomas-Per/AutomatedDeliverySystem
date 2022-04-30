@@ -7,9 +7,7 @@ import lt.vu.ads.models.Courier.json.CourierLoggedInView;
 import lt.vu.ads.models.Courier.json.CourierLoginView;
 import lt.vu.ads.models.Courier.json.CourierRegisterView;
 import lt.vu.ads.repository.CourierRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +32,7 @@ public class CourierServiceImpl implements CourierService {
                 .email(registerView.getEmail())
                 .password(registerView.getPassword())
                 .build();
+        courierRepository.save(courier);
         return CourierLoggedInView.of(courier);
     }
 }
