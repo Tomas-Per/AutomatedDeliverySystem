@@ -1,6 +1,7 @@
 package lt.vu.ads.service.user;
 
 import lombok.RequiredArgsConstructor;
+import lt.vu.ads.exceptions.CustomException;
 import lt.vu.ads.models.Courier.Courier;
 import lt.vu.ads.models.User.User;
 import lt.vu.ads.models.User.json.UserLoggedInView;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserLoggedInView register(UserRegisterView registerView) {
         if (userRepository.findByEmail(registerView.getEmail()) != null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "This email already exists");
+            throw new CustomException("This email already exists");
         }
         User user = User.builder()
                 .firstName(registerView.getFirstName())

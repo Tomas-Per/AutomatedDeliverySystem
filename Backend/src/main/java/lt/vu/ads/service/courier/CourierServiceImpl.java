@@ -1,6 +1,7 @@
 package lt.vu.ads.service.courier;
 
 import lombok.RequiredArgsConstructor;
+import lt.vu.ads.exceptions.CustomException;
 import lt.vu.ads.models.Courier.Courier;
 import lt.vu.ads.models.Courier.json.CourierLoggedInView;
 import lt.vu.ads.models.Courier.json.CourierLoginView;
@@ -24,7 +25,7 @@ public class CourierServiceImpl implements CourierService {
     @Override
     public CourierLoggedInView register(CourierRegisterView registerView) {
         if (courierRepository.findByEmail(registerView.getEmail()) != null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "This email already exists");
+            throw new CustomException("This email already exists");
         }
         Courier courier = Courier.builder()
                 .firstName(registerView.getFirstName())

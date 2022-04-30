@@ -11,9 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @AttributeOverrides({
         @AttributeOverride(name = "email", column = @Column(nullable = false)),
         @AttributeOverride(name = "password", column = @Column(nullable = false)),
@@ -21,8 +19,7 @@ import java.util.List;
 public class Courier extends Account {
 
     @Column
-    @Builder.Default
-    private String workingHours = "9-17";
+    private String workingHours;
 
     @OneToMany(mappedBy = "courier")
     private List<Order> orders;
