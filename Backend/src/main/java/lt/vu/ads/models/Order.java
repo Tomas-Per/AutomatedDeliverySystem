@@ -2,6 +2,8 @@ package lt.vu.ads.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.ads.models.Courier.Courier;
+import lt.vu.ads.models.User.User;
 
 import javax.persistence.*;
 import java.util.Date;
