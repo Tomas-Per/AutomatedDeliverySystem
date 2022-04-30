@@ -24,3 +24,32 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+/* Global styles */
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #727272;
+}
+
+.separator:not(:empty)::before {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.formInputs {
+  margin: 1rem;
+  border: 1px solid #727272;
+}
