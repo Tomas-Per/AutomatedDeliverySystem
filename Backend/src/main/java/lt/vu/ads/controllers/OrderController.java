@@ -1,27 +1,25 @@
 package lt.vu.ads.controllers;
 
+import lombok.RequiredArgsConstructor;
 import lt.vu.ads.exceptions.CustomException;
 import lt.vu.ads.models.Address;
 import lt.vu.ads.models.Order;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
 import lt.vu.ads.service.NumberGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class OrderController {
-    @Autowired
-    OrderRepository orderRepository;
 
-    @Autowired
-    AddressRepository addressRepository;
-
-    @Autowired
-    AddressController addressController;
+    private final OrderRepository orderRepository;
+    private final AddressRepository addressRepository;
+    private final AddressController addressController;
 
     @GetMapping("/orders")
     public List<Order> getAllOrders(){
@@ -38,25 +36,24 @@ public class OrderController {
 
         return ResponseEntity.ok().body(order);
         }
-
-@PutMapping("/order/{id}")
-public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
-                                            @RequestBody Order orderDetails) {
-    Order order = orderRepository.findOneById(orderId);
-    if (order == null){
-        throw new CustomException("Order is not found with id: " + orderId);
+    @PatchMapping("/order/{id}")
+    public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
+                                                @RequestBody Order orderDetails) {
+        Order order = orderRepository.findOneById(orderId);
+        if (order == null){
+            throw new CustomException("Order is not found with id: " + orderId);
+        }
+        if(orderDetails.getConvenientArrivalTimeTo() == null || orderDetails.getConvenientArrivalTimeFrom() == null){
+            throw new CustomException("Order time is empty ");
+        }
+        if(orderDetails.getConvenientArrivalTimeTo().before(orderDetails.getConvenientArrivalTimeFrom())) {
+            throw new CustomException("Order's time is not allowed");
+        }
+        order.setConvenientArrivalTimeFrom(orderDetails.getConvenientArrivalTimeFrom());
+        order.setConvenientArrivalTimeTo(orderDetails.getConvenientArrivalTimeTo());
+        final Order updatedOrder = orderRepository.save(order);
+        return ResponseEntity.ok(updatedOrder);
     }
-    if(orderDetails.getConvenientArrivalTimeTo() == null || orderDetails.getConvenientArrivalTimeFrom() == null){
-        throw new CustomException("Order time is empty ");
-    }
-    if(orderDetails.getConvenientArrivalTimeTo().before(orderDetails.getConvenientArrivalTimeFrom())) {
-        throw new CustomException("Order's time is not allowed");
-    }
-    order.setConvenientArrivalTimeFrom(orderDetails.getConvenientArrivalTimeFrom());
-    order.setConvenientArrivalTimeTo(orderDetails.getConvenientArrivalTimeTo());
-    final Order updatedOrder = orderRepository.save(order);
-    return ResponseEntity.ok(updatedOrder);
-}
 
     @PostMapping("/orders")
     public Order createOrder(@RequestBody Order order)

@@ -1,5 +1,6 @@
 package lt.vu.ads.controllers;
 
+import lombok.RequiredArgsConstructor;
 import lt.vu.ads.exceptions.CustomException;
 import lt.vu.ads.models.Address;
 import lt.vu.ads.repositories.AddressRepository;
@@ -11,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class AddressController {
 
-    @Autowired
-    AddressRepository addressRepository;
+    private final AddressRepository addressRepository;
 
     @GetMapping("/address")
     public List<Address> getAllAddresses(){
