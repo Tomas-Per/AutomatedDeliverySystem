@@ -1,27 +1,24 @@
 package lt.vu.ads.controllers;
 
+import lombok.RequiredArgsConstructor;
 import lt.vu.ads.exceptions.CustomException;
 import lt.vu.ads.models.Address;
 import lt.vu.ads.models.Order;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
 import lt.vu.ads.service.NumberGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class OrderController {
-    @Autowired
-    OrderRepository orderRepository;
 
-    @Autowired
-    AddressRepository addressRepository;
-
-    @Autowired
-    AddressController addressController;
+    private final OrderRepository orderRepository;
+    private final AddressRepository addressRepository;
+    private final AddressController addressController;
 
     @GetMapping("/orders")
     public List<Order> getAllOrders(){
@@ -39,7 +36,7 @@ public class OrderController {
         return ResponseEntity.ok().body(order);
         }
 
-    @PutMapping("/order/{id}")
+    @PatchMapping("/order/{id}")
     public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
                                                 @RequestBody Order orderDetails) {
         Order order = orderRepository.findOneById(orderId);
