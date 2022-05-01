@@ -1,4 +1,4 @@
-package lt.vu.ads.repository;
+package lt.vu.ads.repositories;
 
 import lt.vu.ads.models.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;

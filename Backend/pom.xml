@@ -50,6 +50,11 @@
             <artifactId>mariadb-java-client</artifactId>
             <version>2.7.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>5.5.2</version>
+        </dependency>
     </dependencies>
 
     <build>
