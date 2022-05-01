@@ -23,10 +23,10 @@ public class CourierServiceImpl implements CourierService {
         Courier courier = courierRepository.findByEmail(loginView.getEmail());
 
         if (courier == null) {
-            throw new CustomException("Tokio vartotojo nėra");
+            throw new CustomException("User with such email does not exist");
         }
         if (!passwordEncoder.matches(loginView.getPassword(), courier.getPassword())) {
-            throw new WrongPasswordException("Neteisingas slaptažodis");
+            throw new WrongPasswordException("Wrong password");
         }
 
         return CourierLoggedInView.of(courier);

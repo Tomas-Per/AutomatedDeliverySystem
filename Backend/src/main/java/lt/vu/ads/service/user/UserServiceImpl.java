@@ -23,10 +23,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmailAndPassword(loginView.getEmail(), loginView.getPassword());
 
         if (user == null) {
-            throw new CustomException("Tokio vartotojo nėra");
+            throw new CustomException("User with such email does not exist");
         }
         if (!passwordEncoder.matches(loginView.getPassword(), user.getPassword())) {
-            throw new WrongPasswordException("Neteisingas slaptažodis");
+            throw new WrongPasswordException("Wrong password");
         }
 
         return UserLoggedInView.of(user);
