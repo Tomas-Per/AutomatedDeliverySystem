@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lt.vu.ads.exceptions.CustomException;
 import lt.vu.ads.models.Address;
 import lt.vu.ads.repositories.AddressRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

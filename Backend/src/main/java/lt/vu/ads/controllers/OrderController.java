@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -36,6 +35,7 @@ public class OrderController {
 
         return ResponseEntity.ok().body(order);
         }
+
     @PatchMapping("/order/{id}")
     public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
                                                 @RequestBody Order orderDetails) {
