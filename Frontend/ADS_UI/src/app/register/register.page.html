@@ -6,36 +6,35 @@
 
 <ion-content>
   <img src="assets/logo.png">
+  <form>
+    <ion-item lines="none" class="formInputs">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="postData.email" name="email" type="text" required></ion-input>
+    </ion-item>
 
-  <ion-item lines="none" class="formInputs">
-    <ion-label position="floating">Email</ion-label>
-    <ion-input type="text" required></ion-input>
-  </ion-item>
+    <ion-item lines="none" class="formInputs">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input [(ngModel)]="postData.password" name="password" type="password" required></ion-input>
+    </ion-item>
 
-  <ion-item lines="none" class="formInputs">
-    <ion-label position="floating">Password</ion-label>
-    <ion-input type="password" required></ion-input>
-  </ion-item>
+    <ion-item lines="none" class="formInputs">
+      <ion-label position="floating">Phone number</ion-label>
+      <ion-input [(ngModel)]="postData.phoneNumber" name="phoneNumber" type="text" required></ion-input>
+    </ion-item>
 
-  <ion-item lines="none" class="formInputs">
-    <ion-label position="floating">Phone number</ion-label>
-    <ion-input type="text" required></ion-input>
-  </ion-item>
+    <ion-item lines="none" class="formInputs">
+      <ion-label position="floating">First name</ion-label>
+      <ion-input [(ngModel)]="postData.firstName" name="firstName" type="text" required></ion-input>
+    </ion-item>
 
-  <ion-item lines="none" class="formInputs">
-    <ion-label position="floating">First name</ion-label>
-    <ion-input type="text" required></ion-input>
-  </ion-item>
-
-  <ion-item lines="none" class="formInputs">
-    <ion-label position="floating">Last name</ion-label>
-    <ion-input type="text" required></ion-input>
-  </ion-item>
-
-  <ion-button type="submit" color="primary" shape="round" class="registerBtn">Sign Up</ion-button>
-
+    <ion-item lines="none" class="formInputs">
+      <ion-label position="floating">Last name</ion-label>
+      <ion-input [(ngModel)]="postData.lastName" name="lastName" type="text" required></ion-input>
+    </ion-item>
+  </form>
+  <ion-button type="submit" color="primary" shape="round" class="registerBtn" (click)="signUp()">Sign Up</ion-button>
   <div class="separator">Or</div>
 
-  <ion-button type="submit" color="secondary" shape="round" class="logInBtn">Log in</ion-button>
+  <ion-button type="submit" color="secondary" shape="round" class="logInBtn" (click)="navigateToLogin()">Log in</ion-button>
 
 </ion-content>
