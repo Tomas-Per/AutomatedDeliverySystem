@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>register_delivery</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ng-container *ngFor="let address of addresses">
+      <ion-item button (click)="openAddressModal(address)">
+        <ion-label >
+          <h2>{{address.role}}'s information</h2>
+          <p *ngIf="address.firstName === ''">Fill the information</p>
+          <p *ngIf="address.firstName !== ''">{{address.firstName}} {{address.lastName}}</p>
+          <p *ngIf="address.firstName !== ''">{{address.phoneNumber}}</p>
+          <p *ngIf="address.firstName !== ''">{{address.street}} {{address.houseNumber}}, {{address.city}}</p>
+          <p *ngIf="address.firstName !== ''">{{address.country}}</p>
+          <p *ngIf="address.firstName !== ''">{{address.postalCode}}</p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+  <ion-item>
+    <ion-label>Fragile</ion-label>
+    <ion-checkbox slot="start" color="primary"></ion-checkbox>
+  </ion-item>
+  <ion-row>
+    <ion-col size="4">
+      <img src="../../assets/sizeButtonS.png" style="width : 90% ; height : auto" ng-click="nextpage()" >
+    </ion-col>
+    <ion-col size="4">
+      <img src="../../assets/sizeButtonM.png" style="width : 90% ; height : auto" ng-click="nextpage()" >
+    </ion-col>
+    <ion-col size="4">
+      <img src="../../assets/sizeButtonL.png" style="width : 90% ; height : auto" ng-click="nextpage()" >
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center text-center>
+    <ion-col size="6" class="justify-content-center">
+      <ion-button (click)="isExpress=false" [class.expressButton]="!isExpress">
+        <ion-label>
+          <h3>Standart</h3>
+          <h1><b>2-3 days</b></h1>
+          <h3>€ 2.99</h3>
+        </ion-label>
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="6" class="justify-content-center">
+      <ion-button (click)="isExpress=true" [class.expressButton]="isExpress">
+        <ion-label>
+          <h3>Express</h3>
+          <h1><b>1 day</b></h1>
+          <h3>€ 5.29</h3>
+        </ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

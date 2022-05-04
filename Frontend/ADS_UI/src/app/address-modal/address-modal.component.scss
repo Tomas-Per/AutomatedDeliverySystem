@@ -1,0 +1,16 @@
+ion-item {
+  --padding-start: 0;
+  margin: 0.3rem;
+}
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #727272;
+}
