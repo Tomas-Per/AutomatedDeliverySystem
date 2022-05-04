@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLoggedInView login(UserLoginView loginView) {
-        User user = userRepository.findByEmailAndPassword(loginView.getEmail(), loginView.getPassword());
+        User user = userRepository.findByEmail(loginView.getEmail());
 
         if (user == null) {
             throw new CustomException("User with such email does not exist");
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(registerView.getLastName())
                 .phoneNumber(registerView.getPhoneNumber())
                 .email(registerView.getEmail())
-                .password(registerView.getPassword())
+                .password(passwordEncoder.encode(registerView.getPassword()))
                 .build();
         userRepository.save(user);
         return UserLoggedInView.of(user);
