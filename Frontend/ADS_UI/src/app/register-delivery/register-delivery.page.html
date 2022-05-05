@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="justify-content-center">
     <ion-title>Register delivery</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +20,7 @@
       </ion-item>
     </ng-container>
   </ion-list>
-  <ion-item>
+  <ion-item color="transparent">
     <ion-label>Fragile</ion-label>
     <ion-checkbox slot="start" color="primary"></ion-checkbox>
   </ion-item>
@@ -56,4 +56,6 @@
       </ion-button>
     </ion-col>
   </ion-row>
+  <ion-button color="primary" [disabled]="addresses[0].firstName ==='' || addresses[1].firstName ===''" expand="block" (click)="registerOrder()" class="ion-margin-top">Save</ion-button>
+
 </ion-content>

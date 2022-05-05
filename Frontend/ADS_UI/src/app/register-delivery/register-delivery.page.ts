@@ -2,6 +2,7 @@ import { Component, OnInit, Sanitizer } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { Address } from '../models/address';
+import { Order } from '../models/order';
 import { Size } from '../models/size';
 
 
@@ -12,7 +13,9 @@ import { Size } from '../models/size';
 })
 export class RegisterDeliveryPage implements OnInit {
   isExpress: boolean;
+  isFragile: boolean;
   size: Size;
+  order = new Order();
   addresses = [new Address(), new Address()];
 
   constructor(private modalController: ModalController) { }
@@ -55,6 +58,18 @@ export class RegisterDeliveryPage implements OnInit {
       country: '',
       city: '',
       postalCode: null};
+      this.isFragile = false;
+      this.isExpress = false;
+      this.size = 0;
+  }
+  registerOrder() {
+    this.order = {
+      sender: this.addresses[0],
+      receiver: this.addresses[1],
+      isFragile: this.isFragile,
+      size: this.size,
+      isExpress: this.isExpress
+    };
   }
 
 }
