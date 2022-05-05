@@ -10,7 +10,7 @@
       <ion-item button (click)="openAddressModal(address)">
         <ion-label >
           <h2>{{address.role}}'s information</h2>
-          <p *ngIf="address.firstName === ''">Fill the information</p>
+          <p *ngIf="address.firstName === ''">Fill in the information</p>
           <p *ngIf="address.firstName !== ''">{{address.firstName}} {{address.lastName}}</p>
           <p *ngIf="address.firstName !== ''">{{address.phoneNumber}}</p>
           <p *ngIf="address.firstName !== ''">{{address.street}} {{address.houseNumber}}, {{address.city}}</p>
@@ -39,7 +39,7 @@
     <ion-col size="6" class="justify-content-center">
       <ion-button (click)="isExpress=false" [class.expressButton]="!isExpress">
         <ion-label>
-          <h3>Standart</h3>
+          <h3>Standard</h3>
           <h1><b>2-3 days</b></h1>
           <h3>€ 2.99</h3>
         </ion-label>
