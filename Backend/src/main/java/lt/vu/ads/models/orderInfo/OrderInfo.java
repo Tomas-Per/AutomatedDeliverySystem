@@ -1,7 +1,9 @@
-package lt.vu.ads.models;
+package lt.vu.ads.models.orderInfo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.ads.models.EnumsOrder.OrderStatus;
+import lt.vu.ads.models.order.Order;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -1,8 +1,8 @@
 package lt.vu.ads.service.user;
 
-import lt.vu.ads.models.User.json.UserLoggedInView;
-import lt.vu.ads.models.User.json.UserLoginView;
-import lt.vu.ads.models.User.json.UserRegisterView;
+import lt.vu.ads.models.user.json.UserLoggedInView;
+import lt.vu.ads.models.user.json.UserLoginView;
+import lt.vu.ads.models.user.json.UserRegisterView;
 import org.springframework.validation.annotation.Validated;
 
 @Validated

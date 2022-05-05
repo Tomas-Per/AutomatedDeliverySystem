@@ -1,9 +1,9 @@
 package lt.vu.ads.controllers;
 
 import lombok.RequiredArgsConstructor;
-import lt.vu.ads.models.Courier.json.CourierLoggedInView;
-import lt.vu.ads.models.Courier.json.CourierLoginView;
-import lt.vu.ads.models.Courier.json.CourierRegisterView;
+import lt.vu.ads.models.courier.json.CourierLoggedInView;
+import lt.vu.ads.models.courier.json.CourierLoginView;
+import lt.vu.ads.models.courier.json.CourierRegisterView;
 import lt.vu.ads.service.courier.CourierService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

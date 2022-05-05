@@ -1,4 +1,4 @@
-package lt.vu.ads.models;
+package lt.vu.ads.models.EnumsOrder;
 
 /**enum which shows what status order has
  *

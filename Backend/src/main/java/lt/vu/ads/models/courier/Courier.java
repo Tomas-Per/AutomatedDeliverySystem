@@ -1,8 +1,8 @@
-package lt.vu.ads.models.Courier;
+package lt.vu.ads.models.courier;
 
 import lombok.*;
-import lt.vu.ads.models.Account;
-import lt.vu.ads.models.Order;
+import lt.vu.ads.models.account.Account;
+import lt.vu.ads.models.order.Order;
 
 import javax.persistence.*;
 import java.util.List;

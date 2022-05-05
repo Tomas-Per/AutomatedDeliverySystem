@@ -1,7 +1,9 @@
-package lt.vu.ads.models;
+package lt.vu.ads.models.address;
 
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import javax.persistence.*;
 @Setter
 @Table
 @Entity
+@Builder
+@NoArgsConstructor
 public class Address {
 
     @Id

@@ -1,9 +1,12 @@
-package lt.vu.ads.models;
+package lt.vu.ads.models.order;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.ads.models.Courier.Courier;
-import lt.vu.ads.models.User.User;
+import lt.vu.ads.models.orderInfo.OrderInfo;
+import lt.vu.ads.models.address.Address;
+import lt.vu.ads.models.courier.Courier;
+import lt.vu.ads.models.EnumsOrder.Size;
+import lt.vu.ads.models.user.User;
 
 import javax.persistence.*;
 import java.util.Date;
