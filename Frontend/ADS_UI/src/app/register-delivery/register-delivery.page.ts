@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Sanitizer } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
+import { Address } from '../models/address';
+import { Size } from '../models/size';
+
 
 @Component({
   selector: 'app-register-delivery',
@@ -9,30 +12,9 @@ import { AddressModalComponent } from '../address-modal/address-modal.component'
 })
 export class RegisterDeliveryPage implements OnInit {
   isExpress: boolean;
-  addresses = [
-    {
-      role: 'Sender',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      street: '',
-      houseNumber: '',
-      country: '',
-      city: '',
-      postalCode: null
-    },
-    {
-      role: 'Reciever',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      street: '',
-      houseNumber: '',
-      country: '',
-      city: '',
-      postalCode: null
-    }
-  ];
+  size: Size;
+  addresses = [new Address(), new Address()];
+
   constructor(private modalController: ModalController) { }
 
   async openAddressModal(address) {
@@ -40,15 +22,7 @@ export class RegisterDeliveryPage implements OnInit {
     const modal = await this.modalController.create({
       component: AddressModalComponent,
       componentProps: {
-        role: address.role,
-        firstName: address.firstName,
-        lastName: address.lastName,
-        phoneNumber: address.phoneNumber,
-        street: address.street,
-        houseNumber: address.houseNumber,
-        country: address.country,
-        city: address.city,
-        postalCode: address.postalCode }
+        address }
     });
 
     await modal.present();
@@ -62,7 +36,25 @@ export class RegisterDeliveryPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.addresses);
+    this.addresses[0] = {role: 'Sender',
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      street: '',
+      houseNumber: '',
+      country: '',
+      city: '',
+      postalCode: null};
+
+    this.addresses[1]={role: 'Receiver',
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      street: '',
+      houseNumber: '',
+      country: '',
+      city: '',
+      postalCode: null};
   }
 
 }

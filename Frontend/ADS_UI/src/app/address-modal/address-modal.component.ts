@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Address } from '../models/address';
 
 @Component({
   selector: 'app-address-modal',
@@ -8,15 +9,16 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./address-modal.component.scss'],
 })
 export class AddressModalComponent implements OnInit {
-  @Input() role: string;
-  @Input() firstName: string;
-  @Input() lastName: string;
-  @Input() phoneNumber: string;
-  @Input() street: string;
-  @Input() houseNumber: string;
-  @Input() country: string;
-  @Input() city: string;
-  @Input() postalCode: number;
+  // @Input() role: string;
+  // @Input() firstName: string;
+  // @Input() lastName: string;
+  // @Input() phoneNumber: string;
+  // @Input() street: string;
+  // @Input() houseNumber: string;
+  // @Input() country: string;
+  // @Input() city: string;
+  // @Input() postalCode: number;
+  @Input() address: Address;
 
   nameInput = new FormControl('', Validators.required);
   lastNameInput = new FormControl('', Validators.required);
@@ -34,21 +36,11 @@ export class AddressModalComponent implements OnInit {
 
   onSave() {
     // const newName = this.nameInput.value;
-    const newData = {
-      role: this.role,
-      firstName: this.nameInput.value,
-      lastName: this.lastNameInput.value,
-      phoneNumber: this.phoneNumberInput.value,
-      street: this.streetInput.value,
-      houseNumber: this.houseNumberInput.value,
-      country: this.countryInput.value,
-      city: this.cityInput.value,
-      postalCode: this.postalCodeInput.value
-    };
-    this.modalController.dismiss(newData, 'saved');
+    this.modalController.dismiss(this.address, 'saved');
   }
 
   ngOnInit() {
+    console.log(this.address);
     // this.ionicForm = this.formBuilder.group({
     //   firstName: ['', [Validators.required, Validators.minLength(2)]],
     //   lastName: ['', [Validators.required, Validators.minLength(2)]],

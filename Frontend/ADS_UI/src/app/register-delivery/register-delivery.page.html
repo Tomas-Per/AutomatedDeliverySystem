@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>register_delivery</ion-title>
+    <ion-title>Register delivery</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -25,14 +25,14 @@
     <ion-checkbox slot="start" color="primary"></ion-checkbox>
   </ion-item>
   <ion-row>
-    <ion-col size="4">
-      <img src="../../assets/sizeButtonS.png" style="width : 90% ; height : auto" ng-click="nextpage()" >
+    <ion-col size="4" class="justify-content-center">
+      <img src="../../assets/sizeButtonS.png" style="width : 90% ; height : auto" (click)="size=0" [class.sizeButton]="size===0">
     </ion-col>
-    <ion-col size="4">
-      <img src="../../assets/sizeButtonM.png" style="width : 90% ; height : auto" ng-click="nextpage()" >
+    <ion-col size="4" class="justify-content-center">
+      <img src="../../assets/sizeButtonM.png" style="width : 90% ; height : auto" (click)="size=1" [class.sizeButton]="size===1" >
     </ion-col>
-    <ion-col size="4">
-      <img src="../../assets/sizeButtonL.png" style="width : 90% ; height : auto" ng-click="nextpage()" >
+    <ion-col size="4" class="justify-content-center">
+      <img src="../../assets/sizeButtonL.png" style="width : 90% ; height : auto" (click)="size=2" [class.sizeButton]="size===2" >
     </ion-col>
   </ion-row>
   <ion-row justify-content-center text-center>
