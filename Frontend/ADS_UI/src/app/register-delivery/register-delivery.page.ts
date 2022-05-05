@@ -4,6 +4,7 @@ import { AddressModalComponent } from '../address-modal/address-modal.component'
 import { Address } from '../models/address';
 import { Order } from '../models/order';
 import { Size } from '../models/size';
+import { OrderConfimationModalComponent } from '../order-confimation-modal/order-confimation-modal.component';
 
 
 @Component({
@@ -21,7 +22,6 @@ export class RegisterDeliveryPage implements OnInit {
   constructor(private modalController: ModalController) { }
 
   async openAddressModal(address) {
-    console.log(address);
     const modal = await this.modalController.create({
       component: AddressModalComponent,
       componentProps: {
@@ -62,7 +62,7 @@ export class RegisterDeliveryPage implements OnInit {
       this.isExpress = false;
       this.size = 0;
   }
-  registerOrder() {
+  async registerOrder() {
     this.order = {
       sender: this.addresses[0],
       receiver: this.addresses[1],
@@ -70,6 +70,14 @@ export class RegisterDeliveryPage implements OnInit {
       size: this.size,
       isExpress: this.isExpress
     };
+    const modal = await this.modalController.create({
+      component: OrderConfimationModalComponent,
+      componentProps: {
+        order: this.order }
+    });
+    await modal.present();
+
+    await modal.onWillDismiss();
   }
 
 }

@@ -8,6 +8,7 @@ import { RegisterDeliveryPageRoutingModule } from './register-delivery-routing.m
 
 import { RegisterDeliveryPage } from './register-delivery.page';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
+import { OrderConfimationModalComponent } from '../order-confimation-modal/order-confimation-modal.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { AddressModalComponent } from '../address-modal/address-modal.component'
     IonicModule,
     RegisterDeliveryPageRoutingModule
   ],
-  declarations: [RegisterDeliveryPage, AddressModalComponent],
-  entryComponents: [AddressModalComponent]
+  declarations: [RegisterDeliveryPage, AddressModalComponent, OrderConfimationModalComponent],
+  entryComponents: [AddressModalComponent, OrderConfimationModalComponent]
 })
 export class RegisterDeliveryPageModule {}

@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Confirm delivery</ion-title>
+    <ion-button slot="end">
+      <ion-button size="small" color="primary" (click)="dismissModal() ">Close</ion-button>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>TO</ion-card-subtitle>
+    <ion-card-title>{{order.receiver.firstName}} {{order.receiver.lastName}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{order.receiver.phoneNumber}} <br>
+    {{order.receiver.street}} {{order.receiver.houseNumber}} <br>
+    {{order.receiver.city}}, {{order.receiver.country}} <br>
+    {{order.receiver.postalCode}} <br>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>FROM</ion-card-subtitle>
+    <ion-card-title>{{order.sender.firstName}} {{order.sender.lastName}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{order.sender.phoneNumber}} <br>
+    {{order.sender.street}} {{order.sender.houseNumber}} <br>
+    {{order.sender.city}}, {{order.sender.country}} <br>
+    {{order.sender.postalCode}} <br>
+  </ion-card-content>
+</ion-card>
+
+<!-- <ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Delivery</ion-card-subtitle>
+    <ion-card-title *ngIf="order.isExpress">Express</ion-card-title>
+    <ion-card-title *ngIf="!order.isExpress">Standart</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{order.size}} <br>
+    Fragile: {{order.isFragile}} <br>
+  </ion-card-content>
+</ion-card> -->
+
+<ion-button color="primary">Confirm</ion-button>

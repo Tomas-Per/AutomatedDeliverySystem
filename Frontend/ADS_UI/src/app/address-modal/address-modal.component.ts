@@ -40,7 +40,6 @@ export class AddressModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.address);
     // this.ionicForm = this.formBuilder.group({
     //   firstName: ['', [Validators.required, Validators.minLength(2)]],
     //   lastName: ['', [Validators.required, Validators.minLength(2)]],
