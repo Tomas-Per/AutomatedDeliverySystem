@@ -6,7 +6,7 @@ import lt.vu.ads.models.Address;
 import lt.vu.ads.models.Order;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
-import lt.vu.ads.service.NumberGenerator;
+import lt.vu.ads.service.order.utils.OrderCodeGenerator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -80,8 +80,8 @@ public class OrderController {
                 order.getSourceAddress().getPostalCode()
         );
 
-        NumberGenerator generator = new NumberGenerator();
-        order.setOrderCode(generator.generateNumber());
+        OrderCodeGenerator generator = new OrderCodeGenerator();
+        order.setOrderCode(generator.generateOrderCode());
 
         if (destination_address != null){
             order.setDestinationAddress(addressRepository.findOneById(destination_address.getId()));
