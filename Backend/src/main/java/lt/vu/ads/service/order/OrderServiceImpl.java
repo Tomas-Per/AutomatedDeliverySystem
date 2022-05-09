@@ -5,6 +5,9 @@ import lt.vu.ads.models.Address;
 import lt.vu.ads.models.Size;
 import lt.vu.ads.service.order.utils.DistanceCalculator;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class OrderServiceImpl implements OrderService {
 
@@ -25,7 +28,18 @@ public class OrderServiceImpl implements OrderService {
             case L:
                 price += PriceConstants.L_SIZE_PRICE;
         }
-
         return price;
+    }
+
+    public Date calculateArrivalTime(boolean isExpress) {
+        Calendar calendar = Calendar.getInstance();
+
+        if(isExpress) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            return calendar.getTime();
+        }
+        calendar.add(Calendar.DAY_OF_YEAR, 5);
+        return calendar.getTime();
+
     }
 }
