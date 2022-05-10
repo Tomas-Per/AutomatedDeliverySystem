@@ -2,7 +2,7 @@ package lt.vu.ads.service.courier;
 
 import lombok.RequiredArgsConstructor;
 import lt.vu.ads.exceptions.AlreadyExistsException;
-import lt.vu.ads.exceptions.CustomException;
+import lt.vu.ads.exceptions.NotFoundException;
 import lt.vu.ads.exceptions.WrongPasswordException;
 import lt.vu.ads.models.courier.Courier;
 import lt.vu.ads.models.courier.json.CourierLoggedInView;
@@ -23,7 +23,7 @@ public class CourierServiceImpl implements CourierService {
         Courier courier = courierRepository.findByEmail(loginView.getEmail());
 
         if (courier == null) {
-            throw new CustomException("User with such email does not exist");
+            throw new NotFoundException("User with such email does not exist");
         }
         if (!passwordEncoder.matches(loginView.getPassword(), courier.getPassword())) {
             throw new WrongPasswordException("Wrong password");

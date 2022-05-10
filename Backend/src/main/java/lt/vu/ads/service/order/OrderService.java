@@ -1,7 +1,9 @@
 package lt.vu.ads.service.order;
 
-import lt.vu.ads.models.order.Order;
-import org.springframework.http.ResponseEntity;
+import lt.vu.ads.models.order.json.OrderCreateView;
+import lt.vu.ads.models.order.json.OrderEditView;
+import lt.vu.ads.models.order.json.OrderListView;
+import lt.vu.ads.models.order.json.OrderView;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -9,11 +11,11 @@ import java.util.List;
 @Validated
 public interface OrderService {
 
-    List<Order> getOrders();
+    List<OrderListView> getOrders();
 
-    ResponseEntity<Order> getOrderById(Long orderId);
+    OrderView getOrderById(Long orderId);
 
-    ResponseEntity<Order> updateOrder(Long orderId, Order orderDetails);
+    OrderView updateOrder(Long orderId, OrderEditView orderDetails);
 
-    Order saveOrder(Order order);
+    Long saveOrder(OrderCreateView order);
 }

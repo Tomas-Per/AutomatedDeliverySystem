@@ -11,5 +11,5 @@ public enum OrderStatus {
 
     WAITING_FOR_COURIER,
     IN_DELIVERY,
-    ARRIVED,
+    ARRIVED
 }

@@ -1,7 +1,7 @@
 package lt.vu.ads.service.address;
 
 import lombok.RequiredArgsConstructor;
-import lt.vu.ads.exceptions.CustomException;
+import lt.vu.ads.exceptions.NotFoundException;
 import lt.vu.ads.models.address.Address;
 import lt.vu.ads.models.address.json.AddressCreateView;
 import lt.vu.ads.models.address.json.AddressFromDetailsView;
@@ -26,7 +26,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressView getAddress(Long addressId) {
         Address address = addressRepository.findOneById(addressId);
         if (address == null) {
-            throw new CustomException("Address is not found with id: " + addressId);//TODO: exception
+            throw new NotFoundException("Address is not found with id: " + addressId);
         }
         return AddressView.of(address);
     }
@@ -41,7 +41,7 @@ public class AddressServiceImpl implements AddressService {
                 addressView.getPostalCode()
         );
         if (address == null) {
-            throw new CustomException("Address is not found in database");
+            throw new NotFoundException("Address is not found in database");
         }
         return AddressView.of(address);
     }
@@ -54,7 +54,7 @@ public class AddressServiceImpl implements AddressService {
                 address.getHouseNumber() == null ||
                 address.getPostalCode() == 0
         ) {
-            throw new CustomException("Address is null");
+            throw new NotFoundException("Address is null");
         }
         return addressRepository.save(AddressCreateView.from(address)).getId();
     }

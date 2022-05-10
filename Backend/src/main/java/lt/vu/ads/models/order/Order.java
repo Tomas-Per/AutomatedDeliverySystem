@@ -1,6 +1,9 @@
 package lt.vu.ads.models.order;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lt.vu.ads.models.orderInfo.OrderInfo;
 import lt.vu.ads.models.address.Address;
@@ -17,6 +20,9 @@ import java.util.List;
 @Setter
 @Table(name = "`order`")
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
     @Id

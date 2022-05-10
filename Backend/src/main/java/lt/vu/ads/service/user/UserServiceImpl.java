@@ -2,7 +2,7 @@ package lt.vu.ads.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lt.vu.ads.exceptions.AlreadyExistsException;
-import lt.vu.ads.exceptions.CustomException;
+import lt.vu.ads.exceptions.NotFoundException;
 import lt.vu.ads.exceptions.WrongPasswordException;
 import lt.vu.ads.models.user.User;
 import lt.vu.ads.models.user.json.UserLoggedInView;
@@ -20,10 +20,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLoggedInView login(UserLoginView loginView) {
-        User user = userRepository.findByEmailAndPassword(loginView.getEmail(), loginView.getPassword());
+        User user = userRepository.findByEmail(loginView.getEmail());
 
         if (user == null) {
-            throw new CustomException("User with such email does not exist");
+            throw new NotFoundException("User with such email does not exist");
         }
         if (!passwordEncoder.matches(loginView.getPassword(), user.getPassword())) {
             throw new WrongPasswordException("Wrong password");
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(registerView.getLastName())
                 .phoneNumber(registerView.getPhoneNumber())
                 .email(registerView.getEmail())
-                .password(registerView.getPassword())
+                .password(passwordEncoder.encode(registerView.getPassword()))
                 .build();
         userRepository.save(user);
         return UserLoggedInView.of(user);
