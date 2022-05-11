@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 @CommonsLog
 public class ExceptionController {
-    private static final String UNKNOWN_SERVER_ERROR_RESPONSE_MESSAGE = "Nežinoma serverio klaida";
+    private static final String UNKNOWN_SERVER_ERROR_RESPONSE_MESSAGE = "Unknown server error";
 
     @ExceptionHandler(value = NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
