@@ -9,8 +9,11 @@ import lt.vu.ads.models.order.json.OrderCreateView;
 import lt.vu.ads.models.order.json.OrderEditView;
 import lt.vu.ads.models.order.json.OrderListView;
 import lt.vu.ads.models.order.json.OrderView;
+import lt.vu.ads.models.user.User;
+import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
+import lt.vu.ads.repositories.UserRepository;
 import lt.vu.ads.service.NumberGenerator;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final AddressRepository addressRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<OrderListView> getOrders() {
@@ -37,6 +41,20 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return OrderView.of(order);
+    }
+
+    @Override
+    public List<OrderListView> getOrdersByEmail(UserEmailView emailView) {
+        User user = userRepository.findByEmail(emailView.getEmail());
+        if (user == null) {
+            throw new NotFoundException("");
+        }
+        List<Order> orders = orderRepository.findAllBySourceUser(user);
+        if (orders == null) {
+            throw new NotFoundException("Order is not found with id: " + emailView);
+        }
+
+        return orders.stream().map(OrderListView::of).collect(Collectors.toList());
     }
 
     @Override
