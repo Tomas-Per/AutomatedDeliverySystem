@@ -12,13 +12,12 @@ import java.net.http.HttpResponse;
 
 public class DistanceCalculator {
 
-    @Value("${xRapidAPIKey}")
-    private String xRapidAPIKey;
+//    @Value("${xRapidAPIKey}")
+    private String xRapidAPIKey = System.getenv("xRapidAPIKey");
 
     public double  calculateDistance(Address sourceAddress, Address destinationAddress) {
 
         String sourceAddressString = getAddressString(sourceAddress);
-
         Pair coords1 = getDistance(sourceAddressString);
 
         double sourceLat = (double) coords1.getFirst();
@@ -48,14 +47,17 @@ public class DistanceCalculator {
     }
 
     private String getAddressString(Address address) {
-        return address.getStreet() + address.getHouseNumber()+ address.getCity() + address.getCountry();
+        String street = address.getStreet().replaceAll("\\s", "");
+        String addressString = street + address.getHouseNumber()+ address.getCity() + address.getCountry();
+//        addressString.replaceAll("\\s","");
+        return addressString;
     }
 
 
     private Pair<Double, Double> getDistance(String address) {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://google-maps-geocoding.p.rapidapi.com/geocode/json?" + address))
+                .uri(URI.create("https://google-maps-geocoding.p.rapidapi.com/geocode/json?address=" + address))
                 .header("X-RapidAPI-Host", "google-maps-geocoding.p.rapidapi.com")
                 .header("X-RapidAPI-Key", xRapidAPIKey)
                 .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -65,6 +67,7 @@ public class DistanceCalculator {
 
         try {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

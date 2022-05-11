@@ -23,11 +23,12 @@ public class Order {
     @Column(nullable = false)
     private String orderCode;
 
-    @Column
-    private boolean isExpress = false;
 
     @Column
-    private boolean isFragile = false;
+    private Boolean isExpress = false;
+
+    @Column
+    private Boolean isFragile = false;
 
     @Enumerated(EnumType.STRING)
     private Size size;

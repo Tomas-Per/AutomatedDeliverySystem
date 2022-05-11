@@ -1,14 +1,17 @@
 package lt.vu.ads.service.order;
 
+import lombok.RequiredArgsConstructor;
 import lt.vu.ads.constants.PriceConstants;
 import lt.vu.ads.models.Address;
 import lt.vu.ads.models.Size;
 import lt.vu.ads.service.order.utils.DistanceCalculator;
+import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
 
-
+@Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
 
@@ -17,7 +20,6 @@ public class OrderServiceImpl implements OrderService {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
 
         double distance = distanceCalculator.calculateDistance(sourceAddress, destinationAddress);
-
         double price = distance * PriceConstants.PRICE_PER_KM;
 
         switch (size) {

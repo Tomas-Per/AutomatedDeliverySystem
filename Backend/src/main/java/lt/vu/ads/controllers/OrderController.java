@@ -6,9 +6,12 @@ import lt.vu.ads.models.Address;
 import lt.vu.ads.models.Order;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
+import lt.vu.ads.service.order.OrderService;
 import lt.vu.ads.service.order.utils.OrderCodeGenerator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,6 +22,7 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final AddressRepository addressRepository;
     private final AddressController addressController;
+    private final OrderService orderService;
 
     @GetMapping("/orders")
     public List<Order> getAllOrders(){
@@ -96,6 +100,15 @@ public class OrderController {
         else{
             addressController.createAddress(order.getSourceAddress());
         }
+
+        Date date = new Date();
+        order.setDate(date);
+
+        order.setEstimatedArrivalTime(orderService.calculateArrivalTime(order.getIsExpress()));
+        if (order.getSize() == null){
+            throw new CustomException("Box size is null");
+        }
+        order.setPrice(orderService.calculatePrice(order.getSourceAddress(), order.getDestinationAddress(),order.getSize()));
 
         return orderRepository.save(order);
     }
