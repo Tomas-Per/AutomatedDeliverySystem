@@ -62,6 +62,7 @@ public class OrderController {
     @PostMapping("/orders")
     public Order createOrder(@RequestBody Order order)
     {
+        String generatedCode = "";
         if(order.getDestinationAddress() == null || order.getSourceAddress() == null){
             throw new CustomException("Order's source or destinations addresses are empty");
         }
@@ -84,7 +85,16 @@ public class OrderController {
                 order.getSourceAddress().getPostalCode()
         );
 
+
+        //for order Code duplicates
         OrderCodeGenerator generator = new OrderCodeGenerator();
+        Order orderByCode = orderRepository.findByOrderCode(generator.generateOrderCode());
+
+        while(orderByCode != null){
+            generatedCode = generator.generateOrderCode();
+            orderByCode = orderRepository.findByOrderCode(generatedCode);
+        }
+
         order.setOrderCode(generator.generateOrderCode());
 
         if (destination_address != null){
