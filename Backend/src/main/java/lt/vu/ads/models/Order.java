@@ -21,13 +21,14 @@ public class Order {
     private Long id;
 
     @Column(nullable = false)
-    private int orderCode;
+    private String orderCode;
+
 
     @Column
-    private boolean isExpress = false;
+    private Boolean isExpress = false;
 
     @Column
-    private boolean isFragile = false;
+    private Boolean isFragile = false;
 
     @Enumerated(EnumType.STRING)
     private Size size;
