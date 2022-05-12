@@ -13,30 +13,21 @@ import java.util.Date;
 @Builder
 public class OrderView {
     private Long id;
-    private int orderCode;
+    private String orderCode;
     private boolean isExpress;
     private boolean isFragile;
     private Size size;
     private double price;
     private Date date;
-    //private User sourceUser;
     private Date estimatedArrivalTime;
     private Date convenientArrivalTimeFrom;
     private Date convenientArrivalTimeTo;
-
-    //private Address sourceAddress;
-
-    //private User destinationUser;
-
-    //private Address destinationAddress;
-
-    //private Courier courier;
     public static OrderView of(Order order) {
         return OrderView.builder()
                 .id(order.getId())
                 .orderCode(order.getOrderCode())
-                .isExpress(order.isExpress())
-                .isFragile(order.isFragile())
+                .isExpress(order.getIsExpress())
+                .isFragile(order.getIsFragile())
                 .size(order.getSize())
                 .price(order.getPrice())
                 .date(order.getDate())

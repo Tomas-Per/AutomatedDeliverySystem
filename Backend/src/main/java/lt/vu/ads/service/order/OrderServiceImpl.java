@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lt.vu.ads.constants.PriceConstants;
 import lt.vu.ads.exceptions.BadRequestException;
 import lt.vu.ads.exceptions.NotFoundException;
-import lt.vu.ads.models.Address;
-import lt.vu.ads.models.Size;
+import lt.vu.ads.models.EnumsOrder.Size;
 import lt.vu.ads.models.address.Address;
 import lt.vu.ads.models.order.Order;
 import lt.vu.ads.models.order.json.OrderCreateView;
@@ -17,13 +16,14 @@ import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
 import lt.vu.ads.repositories.UserRepository;
-import lt.vu.ads.service.NumberGenerator;
 import lt.vu.ads.service.order.utils.DistanceCalculator;
+import lt.vu.ads.service.order.utils.OrderCodeGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,6 +82,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Long saveOrder(OrderCreateView order) {
+        String generatedCode;
         if (order.getDestinationAddress() == null || order.getSourceAddress() == null) {
             throw new BadRequestException("Order's source or destinations addresses are empty");
         }
@@ -104,24 +105,79 @@ public class OrderServiceImpl implements OrderService {
                 order.getSourceAddress().getPostalCode()
         );
 
-        NumberGenerator generator = new NumberGenerator();
-        order.setOrderCode(generator.generateNumber());
+        //for order Code duplicates
+        OrderCodeGenerator generator = new OrderCodeGenerator();
+        Order orderByCode = orderRepository.findByOrderCode(generator.generateOrderCode());
 
-        if (destinationAddress != null) {
-            order.setDestinationAddress(addressRepository.findOneById(destinationAddress.getId()));
-        } else {
-            addressRepository.save(order.getDestinationAddress());
+        while (orderByCode != null) {
+            generatedCode = generator.generateOrderCode();
+            orderByCode = orderRepository.findByOrderCode(generatedCode);
         }
 
-        if (sourceAddress != null) {
-            order.setSourceAddress(addressRepository.findOneById(sourceAddress.getId()));
-        } else {
-            addressRepository.save(order.getSourceAddress());
-        }
+        Order newOrder = new Order();
+        newOrder.setOrderCode(generator.generateOrderCode());
 
-        return orderRepository.save(OrderCreateView.of(order)).getId();
+        if (destinationAddress == null) {
+            Address newDestinationAddress = Address.builder()
+                    .city(order.getDestinationAddress().getCity())
+                    .street(order.getDestinationAddress().getStreet())
+                    .houseNumber(order.getDestinationAddress().getHouseNumber())
+                    .country(order.getDestinationAddress().getCountry())
+                    .postalCode(order.getDestinationAddress().getPostalCode())
+                    .build();
+
+            destinationAddress = addressRepository.save(newDestinationAddress);
+        }
+        newOrder.setDestinationAddress(destinationAddress);
+
+        if (sourceAddress == null) {
+            Address newSourceAddress = Address.builder()
+                    .city(order.getSourceAddress().getCity())
+                    .street(order.getSourceAddress().getStreet())
+                    .houseNumber(order.getSourceAddress().getHouseNumber())
+                    .country(order.getSourceAddress().getCountry())
+                    .postalCode(order.getSourceAddress().getPostalCode())
+                    .build();
+
+            sourceAddress = addressRepository.save(newSourceAddress);
+        }
+        newOrder.setSourceAddress(sourceAddress);
+
+        Date date = new Date();
+        newOrder.setDate(date);
+
+        if (order.getSourceUserId() == null) {
+            throw new BadRequestException("Source user id missing");
+        }
+        Optional<User> optionalUser = userRepository.findById(order.getSourceUserId());
+        optionalUser.ifPresent(newOrder::setSourceUser);
+
+        if (order.getDestinationUser() == null) {
+            throw new BadRequestException("Destination user missing");
+        }
+        User user = userRepository.findByFirstNameAndLastNameAndPhoneNumber(
+                order.getDestinationUser().getFirstName(),
+                order.getDestinationUser().getLastName(),
+                order.getDestinationUser().getPhoneNumber()
+        );
+        if (user == null) {
+            user = new User();
+            user.setFirstName(order.getDestinationUser().getFirstName());
+            user.setLastName(order.getDestinationUser().getLastName());
+            user.setPhoneNumber(order.getDestinationUser().getPhoneNumber());
+            user = userRepository.save(user);
+        }
+        newOrder.setDestinationUser(user);
+
+        newOrder.setEstimatedArrivalTime(calculateArrivalTime(order.isExpress()));
+        if (order.getSize() == null) {
+            throw new BadRequestException("Box size is null");
+        }
+        //newOrder.setPrice(123456);
+        newOrder.setPrice(calculatePrice(newOrder.getSourceAddress(), newOrder.getDestinationAddress(), newOrder.getSize()));
+
+        return orderRepository.save(newOrder).getId();
     }
-
 
     public double calculatePrice(Address sourceAddress, Address destinationAddress, Size size) {
 
@@ -144,12 +200,11 @@ public class OrderServiceImpl implements OrderService {
     public Date calculateArrivalTime(boolean isExpress) {
         Calendar calendar = Calendar.getInstance();
 
-        if(isExpress) {
+        if (isExpress) {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
             return calendar.getTime();
         }
         calendar.add(Calendar.DAY_OF_YEAR, 5);
         return calendar.getTime();
-
     }
 }

@@ -1,6 +1,6 @@
 package lt.vu.ads.service.order.utils;
 
-import lt.vu.ads.models.Address;
+import lt.vu.ads.models.address.Address;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
 

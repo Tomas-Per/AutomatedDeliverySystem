@@ -1,7 +1,7 @@
 package lt.vu.ads.service.order;
 
-import lt.vu.ads.models.Address;
-import lt.vu.ads.models.Size;
+import lt.vu.ads.models.EnumsOrder.Size;
+import lt.vu.ads.models.address.Address;
 import lt.vu.ads.models.order.json.OrderCreateView;
 import lt.vu.ads.models.order.json.OrderEditView;
 import lt.vu.ads.models.order.json.OrderListView;

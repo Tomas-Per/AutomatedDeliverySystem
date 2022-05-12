@@ -32,7 +32,6 @@ public class Order {
     @Column(nullable = false)
     private String orderCode;
 
-
     @Column
     private Boolean isExpress = false;
 

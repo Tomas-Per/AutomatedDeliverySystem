@@ -2,25 +2,27 @@ package lt.vu.ads.models.order.json;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.ads.models.address.Address;
-import lt.vu.ads.models.order.Order;
-import lt.vu.ads.models.user.User;
+import lt.vu.ads.models.EnumsOrder.Size;
+import lt.vu.ads.models.address.json.AddressView;
 
 @Getter
 @Setter
 public class OrderCreateView {
 
-    private Address sourceAddress;
-    private Address destinationAddress;
-    private User destinationUser;
-    private int orderCode;
+    private boolean isExpress;
+    private boolean isFragile;
+    private Size size;
+    private AddressView sourceAddress;
+    private AddressView destinationAddress;
+    private UserCreateOrderView destinationUser;
+    private Long sourceUserId;
+    private String orderCode;
 
-    public static Order of(OrderCreateView orderCreateView) {
-        return Order.builder()
-                .sourceAddress(orderCreateView.getSourceAddress())
-                .destinationAddress(orderCreateView.getDestinationAddress())
-                .destinationUser(orderCreateView.getDestinationUser())
-                .orderCode(orderCreateView.getOrderCode())
-                .build();
+    @Getter
+    @Setter
+    public static class UserCreateOrderView {
+        private String firstName;
+        private String lastName;
+        private String phoneNumber;
     }
 }

@@ -14,8 +14,8 @@ import java.util.List;
 @Builder
 public class OrderListView {
     private Long id;
-    private int orderCode;
-    private String orderInfo;
+    private String orderCode;
+    private String orderStatus;
 
     public static OrderListView of(Order order) {
         List<OrderInfo> orderInfo = order.getOrderInfoList();
@@ -23,7 +23,7 @@ public class OrderListView {
         return OrderListView.builder()
                 .id(order.getId())
                 .orderCode(order.getOrderCode())
-                .orderInfo(orderInfo.get(0).getOrderStatus().toString())
+                .orderStatus(!orderInfo.isEmpty() ? orderInfo.get(0).getOrderStatus().toString() : null)
                 .build();
     }
 }

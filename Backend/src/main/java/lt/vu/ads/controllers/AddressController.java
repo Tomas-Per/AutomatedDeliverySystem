@@ -31,7 +31,7 @@ public class AddressController {
         return addressService.getAddress(addressId);
     }
 
-    @GetMapping("/address-by-order/")
+    @GetMapping("/address-by-order")
     public AddressView getAddressByOrderDetails(@RequestBody AddressFromDetailsView address) {
         return addressService.getAddressByOrder(address);
     }
