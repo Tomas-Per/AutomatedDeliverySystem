@@ -1,9 +1,9 @@
 package lt.vu.ads.controllers;
 
 import lombok.RequiredArgsConstructor;
-import lt.vu.ads.models.User.json.UserLoggedInView;
-import lt.vu.ads.models.User.json.UserLoginView;
-import lt.vu.ads.models.User.json.UserRegisterView;
+import lt.vu.ads.models.user.json.UserLoggedInView;
+import lt.vu.ads.models.user.json.UserLoginView;
+import lt.vu.ads.models.user.json.UserRegisterView;
 import lt.vu.ads.service.user.UserService;
 import org.springframework.web.bind.annotation.*;
 

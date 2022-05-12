@@ -1,11 +1,11 @@
-package lt.vu.ads.models.User;
+package lt.vu.ads.models.user;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lt.vu.ads.models.Account;
-import lt.vu.ads.models.Order;
+import lt.vu.ads.models.account.Account;
+import lt.vu.ads.models.order.Order;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;

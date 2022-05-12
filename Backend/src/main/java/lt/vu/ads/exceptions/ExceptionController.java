@@ -20,19 +20,23 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 @CommonsLog
-public class NotFoundExceptionController {
-    private static final String UNKNOWN_SERVER_ERROR_RESPONSE_MESSAGE = "Nežinoma serverio klaida";
+public class ExceptionController {
+    private static final String UNKNOWN_SERVER_ERROR_RESPONSE_MESSAGE = "Unknown server error";
 
-    @ExceptionHandler(value= CustomException.class)
+    @ExceptionHandler(value = NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public @ResponseBody ErrorResponse handleCustomException(CustomException ex)
-    {
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    public @ResponseBody ResponseEntity<Object> handleCustomException(NotFoundException ex, WebRequest request) {
+        return handleException(ex, HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = {WrongPasswordException.class})
     public ResponseEntity<Object> handleWrongPasswordException(WrongPasswordException ex, WebRequest request) {
         return handleException(ex, HttpStatus.UNAUTHORIZED, request);
+    }
+
+    @ExceptionHandler(value = {BadRequestException.class})
+    public ResponseEntity<Object> handleWrongPasswordException(BadRequestException ex, WebRequest request) {
+        return handleException(ex, HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {AlreadyExistsException.class})

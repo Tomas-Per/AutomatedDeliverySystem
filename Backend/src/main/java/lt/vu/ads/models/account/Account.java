@@ -1,4 +1,4 @@
-package lt.vu.ads.models;
+package lt.vu.ads.models.account;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,12 +2,12 @@ package lt.vu.ads.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lt.vu.ads.exceptions.AlreadyExistsException;
-import lt.vu.ads.exceptions.CustomException;
+import lt.vu.ads.exceptions.NotFoundException;
 import lt.vu.ads.exceptions.WrongPasswordException;
-import lt.vu.ads.models.User.User;
-import lt.vu.ads.models.User.json.UserLoggedInView;
-import lt.vu.ads.models.User.json.UserLoginView;
-import lt.vu.ads.models.User.json.UserRegisterView;
+import lt.vu.ads.models.user.User;
+import lt.vu.ads.models.user.json.UserLoggedInView;
+import lt.vu.ads.models.user.json.UserLoginView;
+import lt.vu.ads.models.user.json.UserRegisterView;
 import lt.vu.ads.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(loginView.getEmail());
 
         if (user == null) {
-            throw new CustomException("User with such email does not exist");
+            throw new NotFoundException("User with such email does not exist");
         }
         if (!passwordEncoder.matches(loginView.getPassword(), user.getPassword())) {
             throw new WrongPasswordException("Wrong password");

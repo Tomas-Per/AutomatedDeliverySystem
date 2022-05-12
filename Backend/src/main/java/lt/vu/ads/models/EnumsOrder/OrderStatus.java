@@ -1,4 +1,4 @@
-package lt.vu.ads.models;
+package lt.vu.ads.models.EnumsOrder;
 
 /**enum which shows what status order has
  *
@@ -11,5 +11,5 @@ public enum OrderStatus {
 
     WAITING_FOR_COURIER,
     IN_DELIVERY,
-    ARRIVED,
+    ARRIVED
 }
