@@ -1,12 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
-  constructor() {}
+  packages = [];
+
+  constructor(private router: Router,
+    private storageService: StorageService
+    ) {}
+
+  ngOnInit() {
+    this.storageService.get('userData').then((data)=>{
+      console.log(data.phoneNumber);
+    });
+  }
+
+  getPackages() {
+    // get package previews
+  }
+
+  redirectToPackage() {
+    // specific package
+  }
+
+  navigateToDeliveryRegister() {
+    this.router.navigate(['/register-delivery']);
+  }
 
 }

@@ -1,27 +1,34 @@
-#container {
+.btnContainer {
+  margin-top: 30px;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btns {
+  display: block;
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  height: 90px;
+}
+
+.deliveryText {
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  font-size: 16pt;
+  display: block;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+.list {
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: auto;
+  overflow:hidden;
+  overflow-y:scroll;
+  max-height: 275px;
 }

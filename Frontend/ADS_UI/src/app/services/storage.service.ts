@@ -5,29 +5,29 @@ import { Storage } from '@capacitor/storage';
 providedIn: 'root'
 })
 export class StorageService {
-constructor() {}
+  constructor() {}
 
-// Store the value
-async store(storageKey: string, value: any) {
-    const encryptedValue = btoa(decodeURI(JSON.stringify(value)));
-    await Storage.set({
-      key: storageKey,
-      value: encryptedValue
-    });
+  // Store the value
+  async store(storageKey: string, value: any) {
+      const encryptedValue = btoa(decodeURI(JSON.stringify(value)));
+      await Storage.set({
+        key: storageKey,
+        value: encryptedValue
+      });
   }
 
-// Get the value
-async get(storageKey: string) {
-    const ret = await Storage.get({ key: storageKey });
-    return JSON.parse(decodeURI(atob(ret.value)));
+  // Get the value
+  async get(storageKey: string) {
+      const ret = await Storage.get({ key: storageKey });
+      return JSON.parse(decodeURI(atob(ret.value)));
   }
 
-async removeStorageItem(storageKey: string) {
-    await Storage.remove({ key: storageKey });
+  async removeStorageItem(storageKey: string) {
+      await Storage.remove({ key: storageKey });
   }
 
-// Clear storage
-async clear() {
-    await Storage.clear();
+  // Clear storage
+  async clear() {
+      await Storage.clear();
   }
 }

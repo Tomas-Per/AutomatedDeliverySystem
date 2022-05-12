@@ -41,8 +41,15 @@ export class LoginPage implements OnInit {
       this.authService.login(this.postData).subscribe(
         (res: any) => {
           if (res) {
-          // Storing the User data.
+          // Storing the User data
           this.storageService.store(AuthConstants.AUTH, res);
+          this.storageService.store('email', this.postData.email);
+          this.storageService.get('userData').then((data)=>{
+            console.log(data.phoneNumber);
+          });
+          this.storageService.get('email').then((data)=>{
+            console.log(data);
+          });
           this.router.navigate(['/home']);
           } else {
             this.toastService.presentToast('Incorrect login credentials.');
