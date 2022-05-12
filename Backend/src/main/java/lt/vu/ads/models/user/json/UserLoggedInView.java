@@ -1,9 +1,9 @@
-package lt.vu.ads.models.User.json;
+package lt.vu.ads.models.user.json;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.ads.models.User.User;
+import lt.vu.ads.models.user.User;
 
 @Getter
 @Setter

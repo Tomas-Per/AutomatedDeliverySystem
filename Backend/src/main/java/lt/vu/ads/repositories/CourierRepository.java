@@ -1,6 +1,6 @@
 package lt.vu.ads.repositories;
 
-import lt.vu.ads.models.Courier.Courier;
+import lt.vu.ads.models.courier.Courier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

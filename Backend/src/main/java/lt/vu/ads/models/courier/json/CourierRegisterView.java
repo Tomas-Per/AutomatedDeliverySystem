@@ -1,11 +1,11 @@
-package lt.vu.ads.models.User.json;
+package lt.vu.ads.models.courier.json;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRegisterView {
+public class CourierRegisterView {
     private String email;
     private String password;
     private String firstName;

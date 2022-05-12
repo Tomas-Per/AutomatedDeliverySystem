@@ -1,17 +1,20 @@
 package lt.vu.ads.controllers;
 
 import lombok.RequiredArgsConstructor;
-import lt.vu.ads.exceptions.CustomException;
-import lt.vu.ads.models.Address;
-import lt.vu.ads.models.Order;
-import lt.vu.ads.repositories.AddressRepository;
-import lt.vu.ads.repositories.OrderRepository;
+import lt.vu.ads.models.order.json.OrderCreateView;
+import lt.vu.ads.models.order.json.OrderEditView;
+import lt.vu.ads.models.order.json.OrderListView;
+import lt.vu.ads.models.order.json.OrderView;
+import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.service.order.OrderService;
-import lt.vu.ads.service.order.utils.OrderCodeGenerator;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,44 +22,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderRepository orderRepository;
-    private final AddressRepository addressRepository;
-    private final AddressController addressController;
     private final OrderService orderService;
 
     @GetMapping("/orders")
-    public List<Order> getAllOrders(){
-        return orderRepository.findAll();
+    public  List<OrderListView> getAllOrders() {
+        return orderService.getOrders();
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity < Order > getOrderById(@PathVariable(value = "id") Long orderId)
-    {
-        Order order = orderRepository.findOneById(orderId);
-        if (order == null){
-            throw new CustomException("Order is not found with id: " + orderId);
-        }
+    public OrderView getOrderById(@PathVariable(value = "id") Long orderId) {
+        return orderService.getOrderById(orderId);
+    }
 
-        return ResponseEntity.ok().body(order);
-        }
+    @GetMapping("/order/email")
+    public List<OrderListView> getOrderByEmail(@RequestBody UserEmailView emailView) {
+        return orderService.getOrdersByEmail(emailView);
+    }
 
     @PatchMapping("/order/{id}")
-    public ResponseEntity < Order > updateOrder(@PathVariable(value = "id") Long orderId,
-                                                @RequestBody Order orderDetails) {
-        Order order = orderRepository.findOneById(orderId);
-        if (order == null){
-            throw new CustomException("Order is not found with id: " + orderId);
-        }
-        if(orderDetails.getConvenientArrivalTimeTo() == null || orderDetails.getConvenientArrivalTimeFrom() == null){
-            throw new CustomException("Order time is empty ");
-        }
-        if(orderDetails.getConvenientArrivalTimeTo().before(orderDetails.getConvenientArrivalTimeFrom())) {
-            throw new CustomException("Order's time is not allowed");
-        }
-        order.setConvenientArrivalTimeFrom(orderDetails.getConvenientArrivalTimeFrom());
-        order.setConvenientArrivalTimeTo(orderDetails.getConvenientArrivalTimeTo());
-        final Order updatedOrder = orderRepository.save(order);
-        return ResponseEntity.ok(updatedOrder);
+    public OrderView updateOrder(@PathVariable(value = "id") Long orderId,
+                                             @RequestBody OrderEditView orderDetails) {
+        return orderService.updateOrder(orderId, orderDetails);
     }
 
     @PostMapping("/orders")
@@ -121,7 +107,7 @@ public class OrderController {
         order.setPrice(orderService.calculatePrice(order.getSourceAddress(), order.getDestinationAddress(),order.getSize()));
 
         return orderRepository.save(order);
-    }
-
-
+    /*public Long createOrder(@RequestBody OrderCreateView order) {
+        return orderService.saveOrder(order);
+    }*/
 }
