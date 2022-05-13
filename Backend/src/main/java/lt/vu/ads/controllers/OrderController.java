@@ -5,6 +5,8 @@ import lt.vu.ads.models.order.json.OrderCreateView;
 import lt.vu.ads.models.order.json.OrderEditView;
 import lt.vu.ads.models.order.json.OrderListView;
 import lt.vu.ads.models.order.json.OrderView;
+import lt.vu.ads.models.orderInfo.OrderInfo;
+import lt.vu.ads.models.orderInfo.json.OrderInfoView;
 import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.service.order.OrderService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,11 @@ public class OrderController {
     @GetMapping("/order/{id}")
     public OrderView getOrderById(@PathVariable(value = "id") Long orderId) {
         return orderService.getOrderById(orderId);
+    }
+
+    @GetMapping("/order/info/{id}")
+    public OrderInfoView getOrderInfoById(@PathVariable(value = "id") Long orderId) {
+        return orderService.getOrderInfoById(orderId);
     }
 
     @GetMapping("/order/email")
