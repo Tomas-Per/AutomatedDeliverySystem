@@ -11,6 +11,7 @@ import lt.vu.ads.models.order.json.OrderCreateView;
 import lt.vu.ads.models.order.json.OrderEditView;
 import lt.vu.ads.models.order.json.OrderListView;
 import lt.vu.ads.models.order.json.OrderView;
+import lt.vu.ads.models.orderInfo.json.OrderInfoView;
 import lt.vu.ads.models.user.User;
 import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.repositories.AddressRepository;
@@ -47,6 +48,19 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return OrderView.of(order);
+    }
+
+    @Override
+    public OrderInfoView getOrderInfoById(Long orderId) {
+        Order order = orderRepository.findOneById(orderId);
+        if (order == null) {
+            throw new NotFoundException("Order is not found with id: " + orderId);
+        }
+        if (order.getOrderInfoList() == null || order.getOrderInfoList().isEmpty()) {
+            throw new BadRequestException("Order status not available");
+        }
+
+        return OrderInfoView.of(order);
     }
 
     @Override
