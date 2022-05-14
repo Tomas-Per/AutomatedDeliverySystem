@@ -14,7 +14,7 @@ import java.util.List;
 @Validated
 public interface OrderService {
 
-    Date calculateArrivalTime(boolean isExpress);
+    Date calculateArrivalTime(Boolean isExpress);
 
     List<OrderListView> getOrders();
 

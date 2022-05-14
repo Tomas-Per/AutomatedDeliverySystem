@@ -1,6 +1,7 @@
 package lt.vu.ads.service.order.utils;
 
 import lt.vu.ads.models.address.Address;
+import lt.vu.ads.models.address.json.AddressView;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
 
@@ -15,7 +16,7 @@ public class DistanceCalculator {
 //    @Value("${xRapidAPIKey}")
     private String xRapidAPIKey = System.getenv("xRapidAPIKey");
 
-    public double  calculateDistance(Address sourceAddress, Address destinationAddress) {
+    public double  calculateDistance(AddressView sourceAddress, AddressView destinationAddress) {
 
         String sourceAddressString = getAddressString(sourceAddress);
         Pair coords1 = getDistance(sourceAddressString);
@@ -46,7 +47,7 @@ public class DistanceCalculator {
         }
     }
 
-    private String getAddressString(Address address) {
+    private String getAddressString(AddressView address) {
         String street = address.getStreet().replaceAll("\\s", "");
         String addressString = street + address.getHouseNumber()+ address.getCity() + address.getCountry();
 //        addressString.replaceAll("\\s","");

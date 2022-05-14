@@ -182,16 +182,16 @@ public class OrderServiceImpl implements OrderService {
         }
         newOrder.setDestinationUser(user);
 
-        newOrder.setEstimatedArrivalTime(calculateArrivalTime(order.isExpress()));
+        newOrder.setEstimatedArrivalTime(calculateArrivalTime(order.getIsExpress()));
         if (order.getSize() == null) {
             throw new BadRequestException("Box size is null");
         }
-        newOrder.setPrice(priceService.calculatePrice(newOrder.getSourceAddress(), newOrder.getDestinationAddress(), newOrder.getSize(), newOrder.getIsExpress()));
+        newOrder.setPrice(priceService.calculatePrice(order));
 
         return orderRepository.save(newOrder).getId();
     }
 
-    public Date calculateArrivalTime(boolean isExpress) {
+    public Date calculateArrivalTime(Boolean isExpress) {
         Calendar calendar = Calendar.getInstance();
 
         if (isExpress) {

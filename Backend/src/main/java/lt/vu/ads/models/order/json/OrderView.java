@@ -15,16 +15,14 @@ import java.util.Date;
 public class OrderView {
     private Long id;
     private String orderCode;
-    private boolean isExpress;
-    private boolean isFragile;
+    private Boolean isExpress;
+    private Boolean isFragile;
     private Size size;
     private double price;
     private Date date;
     private Date estimatedArrivalTime;
     private Date convenientArrivalTimeFrom;
     private Date convenientArrivalTimeTo;
-    private Address sourceAddress;
-    private Address destinationAddress;
     public static OrderView of(Order order) {
         return OrderView.builder()
                 .id(order.getId())
@@ -37,8 +35,6 @@ public class OrderView {
                 .estimatedArrivalTime(order.getEstimatedArrivalTime())
                 .convenientArrivalTimeFrom(order.getConvenientArrivalTimeFrom())
                 .convenientArrivalTimeTo(order.getConvenientArrivalTimeTo())
-                .sourceAddress(order.getSourceAddress())
-                .destinationAddress(order.getDestinationAddress())
                 .build();
     }
 }

@@ -9,8 +9,8 @@ import lt.vu.ads.models.address.json.AddressView;
 @Setter
 public class OrderCreateView {
 
-    private boolean isExpress;
-    private boolean isFragile;
+    private Boolean isExpress;
+    private Boolean isFragile;
     private Size size;
     private AddressView sourceAddress;
     private AddressView destinationAddress;
