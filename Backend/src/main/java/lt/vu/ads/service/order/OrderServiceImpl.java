@@ -1,10 +1,8 @@
 package lt.vu.ads.service.order;
 
 import lombok.RequiredArgsConstructor;
-import lt.vu.ads.constants.PriceConstants;
 import lt.vu.ads.exceptions.BadRequestException;
 import lt.vu.ads.exceptions.NotFoundException;
-import lt.vu.ads.models.EnumsOrder.Size;
 import lt.vu.ads.models.address.Address;
 import lt.vu.ads.models.order.Order;
 import lt.vu.ads.models.order.json.OrderCreateView;
@@ -17,8 +15,8 @@ import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
 import lt.vu.ads.repositories.UserRepository;
-import lt.vu.ads.service.order.utils.DistanceCalculator;
 import lt.vu.ads.service.order.utils.OrderCodeGenerator;
+import lt.vu.ads.service.price.PriceService;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -31,6 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final PriceService priceService;
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
 
@@ -187,28 +186,9 @@ public class OrderServiceImpl implements OrderService {
         if (order.getSize() == null) {
             throw new BadRequestException("Box size is null");
         }
-        //newOrder.setPrice(123456);
-        newOrder.setPrice(calculatePrice(newOrder.getSourceAddress(), newOrder.getDestinationAddress(), newOrder.getSize()));
+        newOrder.setPrice(priceService.calculatePrice(newOrder.getSourceAddress(), newOrder.getDestinationAddress(), newOrder.getSize(), newOrder.getIsExpress()));
 
         return orderRepository.save(newOrder).getId();
-    }
-
-    public double calculatePrice(Address sourceAddress, Address destinationAddress, Size size) {
-
-        DistanceCalculator distanceCalculator = new DistanceCalculator();
-
-        double distance = distanceCalculator.calculateDistance(sourceAddress, destinationAddress);
-        double price = distance * PriceConstants.PRICE_PER_KM;
-
-        switch (size) {
-            case S:
-                price += PriceConstants.S_SIZE_PRICE;
-            case M:
-                price += PriceConstants.M_SIZE_PRICE;
-            case L:
-                price += PriceConstants.L_SIZE_PRICE;
-        }
-        return price;
     }
 
     public Date calculateArrivalTime(boolean isExpress) {
