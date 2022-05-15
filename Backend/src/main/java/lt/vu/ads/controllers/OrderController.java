@@ -36,7 +36,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/email")
-    public List<OrderListView> getOrderByEmail(@RequestParam("email") UserEmailView emailView) {
+    public List<OrderListView> getOrderByEmail(@RequestParam("email") String emailView) {
         return orderService.getOrdersByEmail(emailView);
     }
 

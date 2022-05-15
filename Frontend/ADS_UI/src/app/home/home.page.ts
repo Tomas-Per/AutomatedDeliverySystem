@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
+import { OrderService } from '../services/order.service';
+import { OrderPreview } from '../models/orderPreview';
 
 @Component({
   selector: 'app-home',
@@ -9,24 +11,33 @@ import { StorageService } from '../services/storage.service';
 })
 export class HomePage implements OnInit{
 
-  packages = [];
+  packages: OrderPreview[];
+  email: string;
 
   constructor(private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private orderService: OrderService
     ) {}
 
   ngOnInit() {
-    this.storageService.get('userData').then((data)=>{
-      console.log(data.phoneNumber);
-    });
-  }
-
-  getPackages() {
     // get package previews
-  }
+    this.storageService.get('email').then((data)=>{
+      this.email = data;
+      this.orderService.getOrderList(this.email)
+        .subscribe(data1 => {
+          this.packages = data1;
+          this.packages.forEach(element => {
+            if(element.orderStatus === 'IN_DELIVERY') {
+              element.orderStatus = 'In delivery';
+            } else if (element.orderStatus === 'ARRIVED') {
+                element.orderStatus = 'Arrived';
+            } else {
+                element.orderStatus = 'Waiting for courier';
+            };
+          });
+        });
 
-  redirectToPackage() {
-    // specific package
+    });
   }
 
   navigateToDeliveryRegister() {

@@ -18,30 +18,13 @@
 
   <ion-text class="deliveryText">Your delivery history</ion-text>
   <ion-list class="list">
-    <ion-item>
-      <ion-label>Test</ion-label>
+    <ion-item *ngFor="let package of packages">
+      <ion-label>
+        <a>{{package.orderCode}}</a>
+        <ion-text class="orderStatus">{{package.orderStatus}}</ion-text>
+      </ion-label>
     </ion-item>
-    <ion-item>
-      <ion-label>Test</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Test</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Test</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Test</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Test</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Test</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Test</ion-label>
-    </ion-item>
+
   </ion-list>
 
 </ion-content>

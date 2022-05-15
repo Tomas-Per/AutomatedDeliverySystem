@@ -39,8 +39,7 @@ export class AuthService {
   }
 
   logout() {
-      this.storageService.removeStorageItem(AuthConstants.AUTH).then(res => {
-        this.router.navigate(['/login']);
-      });
+      this.storageService.clear();
+      this.router.navigate(['/login']);
   }
 }
