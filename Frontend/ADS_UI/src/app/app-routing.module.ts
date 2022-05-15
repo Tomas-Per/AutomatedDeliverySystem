@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'register-delivery',
     loadChildren: () => import('./register-delivery/register-delivery.module').then( m => m.RegisterDeliveryPageModule)
   },
+  {
+    path: 'order-details/:id/:orderCode',
+    loadChildren: () => import('./order-details/order-details.module').then( m => m.OrderDetailsPageModule)
+  },
+
 
 ];
 

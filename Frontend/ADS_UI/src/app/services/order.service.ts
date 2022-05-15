@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { OrderPreview } from '../models/orderPreview';
+import { OrderDetailed } from '../models/orderDetailed';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,15 @@ export class OrderService {
     const url = environment.apiUrl + 'api/order/email';
 
     return this.http.get<OrderPreview[]>(url, options);
+  }
+
+  getOrder(id: string): Observable<OrderDetailed> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    const options = { headers, withCredintials: false};
+    const url = environment.apiUrl + 'api/order/' + id;
+
+    return this.http.get<OrderDetailed>(url, options);
   }
 }

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Order details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="order">
+    <ion-text>Delivery {{order.orderCode}}</ion-text>
+    <ion-grid>
+
+      <ion-row>
+        <ion-col>Delivery status</ion-col>
+        <ion-col></ion-col> <!-- add status to backend -->
+
+      </ion-row>
+
+      <ion-row>
+        <ion-col>Date placed</ion-col>
+        <ion-col>{{order.date}}</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>Estimated delivery time</ion-col>
+        <ion-col>{{order.estimatedArrivalTime}}</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>Express</ion-col>
+        <ion-col>{{order.isExpress ? "Yes" : "No"}}</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>Fragile</ion-col>
+        <ion-col>{{order.isFragile ? "Yes" : "No"}}</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>Size</ion-col>
+        <ion-col>{{order.size}}</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>Delivery price</ion-col>
+        <ion-col>{{order.price | currency:'EUR':true}}</ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </div>
+</ion-content>
