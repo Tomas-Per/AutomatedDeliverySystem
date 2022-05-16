@@ -1,3 +1,4 @@
+import { Address } from './address';
 import { Size } from './size';
 
 export class OrderDetailed {
@@ -11,4 +12,6 @@ export class OrderDetailed {
   estimatedArrivalTime: string;
   convenientArrivalTimeFrom: string;
   convenientArrivalTimeTo: string;
+  sourceAddress: Address;
+  destinationAddress: Address;
 }
