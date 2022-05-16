@@ -2,9 +2,12 @@ import { Component, OnInit, Sanitizer } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { Address } from '../models/address';
+import { AddressPreview } from '../models/addressPreview';
 import { Order } from '../models/order';
+import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
 import { Size } from '../models/size';
 import { OrderConfimationModalComponent } from '../order-confimation-modal/order-confimation-modal.component';
+import { OrderService } from '../services/order.service';
 
 
 @Component({
@@ -17,9 +20,13 @@ export class RegisterDeliveryPage implements OnInit {
   isFragile: boolean;
   size: Size;
   order = new Order();
+  orderPreview = new OrderPriceAndDatePreview();
+  sourceAddress = new AddressPreview();
+  destinationAddress = new AddressPreview();
   addresses = [new Address(), new Address()];
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController,
+    public orderService: OrderService) { }
 
   async openAddressModal(address) {
     const modal = await this.modalController.create({
@@ -70,6 +77,28 @@ export class RegisterDeliveryPage implements OnInit {
       size: this.size,
       isExpress: this.isExpress
     };
+    this.sourceAddress = {
+      city: this.addresses[0].city,
+      street: this.addresses[0].street,
+      houseNumber: this.addresses[0].houseNumber,
+      country: this.addresses[0].country,
+      postalCode: this.addresses[0].postalCode
+    };
+    this.destinationAddress = {
+        city: this.addresses[1].city,
+        street: this.addresses[1].street,
+        houseNumber: this.addresses[1].houseNumber,
+        country: this.addresses[1].country,
+        postalCode: this.addresses[1].postalCode
+    };
+    this.orderPreview = {
+      sourceAddress: this.sourceAddress,
+      destinationAddress: this.destinationAddress,
+      isExpress: this.isExpress,
+      isFragile: this.isFragile,
+      size: this.size
+    };
+    this.orderService.getOrderPreview(this.orderPreview).subscribe(res => {console.log(res);});
     const modal = await this.modalController.create({
       component: OrderConfimationModalComponent,
       componentProps: {
