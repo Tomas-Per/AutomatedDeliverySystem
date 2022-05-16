@@ -1,6 +1,7 @@
 package lt.vu.ads.service.order;
 
 import lombok.RequiredArgsConstructor;
+import lt.vu.ads.constants.PriceConstants;
 import lt.vu.ads.exceptions.BadRequestException;
 import lt.vu.ads.exceptions.NotFoundException;
 import lt.vu.ads.models.address.Address;
@@ -15,8 +16,8 @@ import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.OrderRepository;
 import lt.vu.ads.repositories.UserRepository;
+import lt.vu.ads.service.order.utils.DistanceCalculator;
 import lt.vu.ads.service.order.utils.OrderCodeGenerator;
-import lt.vu.ads.service.price.PriceService;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -29,7 +30,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
-    private final PriceService priceService;
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
 
@@ -182,12 +182,8 @@ public class OrderServiceImpl implements OrderService {
         }
         newOrder.setDestinationUser(user);
 
-        newOrder.setEstimatedArrivalTime(calculateArrivalTime(order.getIsExpress()));
-        if (order.getSize() == null) {
-            throw new BadRequestException("Box size is null");
-        }
-        newOrder.setPrice(priceService.calculatePrice(order));
-
+        newOrder.setEstimatedArrivalTime(calculatePriceAndDate(order).getEstimatedArrivalTime());
+        newOrder.setPrice(calculatePriceAndDate(order).getPrice());
         return orderRepository.save(newOrder).getId();
     }
 
@@ -200,5 +196,40 @@ public class OrderServiceImpl implements OrderService {
         }
         calendar.add(Calendar.DAY_OF_YEAR, 5);
         return calendar.getTime();
+    }
+    public OrderView calculatePriceAndDate(OrderCreateView orderView) {
+
+        if(orderView.getSourceAddress()== null || orderView.getDestinationAddress() == null){
+            throw new BadRequestException("Source or destinations addresses are empty");
+        }
+        if(orderView.getSourceAddress().equals(orderView.getDestinationAddress())){
+            throw new BadRequestException("Source or destinations addresses are not allowed");
+        }
+        if(orderView.getSize() == null){
+            throw new BadRequestException("Box size is null");
+        }
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+
+        double distance = distanceCalculator.calculateDistance(orderView.getSourceAddress(), orderView.getDestinationAddress());
+        double price = distance * PriceConstants.PRICE_PER_KM;
+
+        switch (orderView.getSize()) {
+            case S:
+                price += PriceConstants.S_SIZE_PRICE;
+            case M:
+                price += PriceConstants.M_SIZE_PRICE;
+            case L:
+                price += PriceConstants.L_SIZE_PRICE;
+        }
+        if(orderView.getIsExpress()){
+            price += PriceConstants.EXPRESS_PRICE_ADDITION;
+        }
+
+        Date arrivalDate = calculateArrivalTime(orderView.getIsExpress());
+
+        Order order = new Order();
+        order.setPrice(price);
+        order.setEstimatedArrivalTime(arrivalDate);
+        return OrderView.of(order);
     }
 }

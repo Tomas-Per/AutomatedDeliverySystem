@@ -9,14 +9,9 @@ import lt.vu.ads.models.orderInfo.OrderInfo;
 import lt.vu.ads.models.orderInfo.json.OrderInfoView;
 import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.service.order.OrderService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -56,4 +51,10 @@ public class OrderController {
     public Long createOrder(@RequestBody OrderCreateView order) {
         return orderService.saveOrder(order);
     }
+
+    @PostMapping("/priceAndDate")
+    public OrderView getPriceAndDate(@RequestBody OrderCreateView orderView) {
+        return orderService.calculatePriceAndDate(orderView);
+    }
+
 }

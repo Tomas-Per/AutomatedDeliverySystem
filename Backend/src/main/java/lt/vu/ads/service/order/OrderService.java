@@ -14,6 +14,8 @@ import java.util.List;
 @Validated
 public interface OrderService {
 
+    OrderView calculatePriceAndDate(OrderCreateView orderView);
+
     Date calculateArrivalTime(Boolean isExpress);
 
     List<OrderListView> getOrders();
