@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { OrderPreview } from '../models/orderPreview';
 import { OrderDetailed } from '../models/orderDetailed';
+import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
+import { Order } from '../models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +37,14 @@ export class OrderService {
     const url = environment.apiUrl + 'api/order/' + id;
 
     return this.http.get<OrderDetailed>(url, options);
+  }
+  getOrderPreview(postData: OrderPriceAndDatePreview): Observable<OrderDetailed> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    const options = { headers, withCredintials: false};
+    const url = environment.apiUrl + 'api/priceAndDate';
+
+    return this.http.post<OrderDetailed>(url, JSON.stringify(postData), options);
   }
 }
