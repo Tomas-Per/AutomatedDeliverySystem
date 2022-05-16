@@ -5,12 +5,16 @@ import lombok.Setter;
 import lt.vu.ads.models.EnumsOrder.Size;
 import lt.vu.ads.models.address.json.AddressView;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class OrderCreateView {
 
     private Boolean isExpress;
     private Boolean isFragile;
+    private double price;
+    private Date estimatedArrivalTime;
     private Size size;
     private AddressView sourceAddress;
     private AddressView destinationAddress;

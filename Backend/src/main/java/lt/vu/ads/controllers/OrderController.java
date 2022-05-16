@@ -1,10 +1,7 @@
 package lt.vu.ads.controllers;
 
 import lombok.RequiredArgsConstructor;
-import lt.vu.ads.models.order.json.OrderCreateView;
-import lt.vu.ads.models.order.json.OrderEditView;
-import lt.vu.ads.models.order.json.OrderListView;
-import lt.vu.ads.models.order.json.OrderView;
+import lt.vu.ads.models.order.json.*;
 import lt.vu.ads.models.orderInfo.OrderInfo;
 import lt.vu.ads.models.orderInfo.json.OrderInfoView;
 import lt.vu.ads.models.user.json.UserEmailView;
@@ -53,7 +50,7 @@ public class OrderController {
     }
 
     @PostMapping("/priceAndDate")
-    public OrderView getPriceAndDate(@RequestBody OrderCreateView orderView) {
+    public OrderPreviewView getPriceAndDate(@RequestBody OrderCreateView orderView) {
         return orderService.calculatePriceAndDate(orderView);
     }
 

@@ -6,10 +6,7 @@ import lt.vu.ads.exceptions.BadRequestException;
 import lt.vu.ads.exceptions.NotFoundException;
 import lt.vu.ads.models.address.Address;
 import lt.vu.ads.models.order.Order;
-import lt.vu.ads.models.order.json.OrderCreateView;
-import lt.vu.ads.models.order.json.OrderEditView;
-import lt.vu.ads.models.order.json.OrderListView;
-import lt.vu.ads.models.order.json.OrderView;
+import lt.vu.ads.models.order.json.*;
 import lt.vu.ads.models.orderInfo.json.OrderInfoView;
 import lt.vu.ads.models.user.User;
 import lt.vu.ads.models.user.json.UserEmailView;
@@ -197,7 +194,7 @@ public class OrderServiceImpl implements OrderService {
         calendar.add(Calendar.DAY_OF_YEAR, 5);
         return calendar.getTime();
     }
-    public OrderView calculatePriceAndDate(OrderCreateView orderView) {
+    public OrderPreviewView calculatePriceAndDate(OrderCreateView orderView) {
 
         if(orderView.getSourceAddress()== null || orderView.getDestinationAddress() == null){
             throw new BadRequestException("Source or destinations addresses are empty");
@@ -227,9 +224,9 @@ public class OrderServiceImpl implements OrderService {
 
         Date arrivalDate = calculateArrivalTime(orderView.getIsExpress());
 
-        Order order = new Order();
-        order.setPrice(price);
-        order.setEstimatedArrivalTime(arrivalDate);
-        return OrderView.of(order);
+        orderView.setPrice(price);
+        orderView.setEstimatedArrivalTime(arrivalDate);
+        
+        return OrderPreviewView.of(orderView);
     }
 }
