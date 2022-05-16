@@ -10,6 +10,8 @@ import { OrderDetailed } from '../models/orderDetailed';
 })
 export class OrderService {
 
+  orderStatus: string;
+
   constructor(
     private http: HttpClient
   ) { }

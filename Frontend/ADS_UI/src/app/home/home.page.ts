@@ -16,7 +16,7 @@ export class HomePage implements OnInit{
 
   constructor(private router: Router,
     private storageService: StorageService,
-    private orderService: OrderService
+    public orderService: OrderService
     ) {}
 
   ngOnInit() {

@@ -18,7 +18,8 @@
 
   <ion-text class="deliveryText">Your delivery history</ion-text>
   <ion-list class="list">
-    <ion-item button *ngFor="let package of packages" [routerLink]="['/', 'order-details', package.id, package.orderCode]">
+    <ion-item button *ngFor="let package of packages"
+      [routerLink]="['/', 'order-details', package.id, package.orderCode]" (click)="orderService.orderStatus = package.orderStatus">
       <ion-label>
         {{package.orderCode}}
         <ion-text class="orderStatus">{{package.orderStatus}}</ion-text>

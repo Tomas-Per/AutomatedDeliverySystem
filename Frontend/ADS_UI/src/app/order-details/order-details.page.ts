@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 export class OrderDetailsPage implements OnInit {
 
   order: OrderDetailed = null;
-  constructor(private orderService: OrderService,
+  constructor(public orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private datePipe: DatePipe
     ) { }
