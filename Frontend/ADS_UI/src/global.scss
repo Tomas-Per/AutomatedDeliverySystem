@@ -53,3 +53,29 @@
   margin: 1rem;
   border: 1px solid #727272;
 }
+
+
+ion-title {
+  margin-top: 0px;
+  line-height: 60px;
+  padding-left: 50px;
+  color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-title {
+    background: url('assets/bannerlogoDARK.png') no-repeat left center;
+    background-size: contain;
+    background-color: #E50882;
+    text-align: center;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  ion-title {
+    background: url('assets/bannerlogoLIGHT.png') no-repeat left center;
+    background-size: contain;
+    background-color: #E50882;
+    text-align: center;
+  }
+}
