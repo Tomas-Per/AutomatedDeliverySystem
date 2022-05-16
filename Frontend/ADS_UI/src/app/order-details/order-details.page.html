@@ -1,6 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Order details</ion-title>
+    <div class="toolBarContainer">
+      <ion-title>Order details</ion-title>
+      <ion-buttons class="homeBtnContainer" slot="end">
+        <ion-button fill="clear" [routerLink]="['/home']">
+          <ion-icon slot="icon-only" name="grid"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
   </ion-toolbar>
 </ion-header>
 
