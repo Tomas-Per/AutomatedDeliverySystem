@@ -16,7 +16,7 @@ public class DistanceCalculator {
 //    @Value("${xRapidAPIKey}")
     private String xRapidAPIKey = System.getenv("xRapidAPIKey");
 
-    public double  calculateDistance(AddressView sourceAddress, AddressView destinationAddress) {
+    public double calculateDistance(AddressView sourceAddress, AddressView destinationAddress) {
 
         String sourceAddressString = getAddressString(sourceAddress);
         Pair coords1 = getDistance(sourceAddressString);
