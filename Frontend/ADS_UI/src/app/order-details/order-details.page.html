@@ -6,43 +6,64 @@
 
 <ion-content>
   <div *ngIf="order">
-    <ion-text>Delivery {{order.orderCode}}</ion-text>
+    <div class="deliveryText">
+      <ion-text>Delivery #{{order.orderCode}}</ion-text>
+    </div>
+
     <ion-grid>
 
-      <ion-row>
+      <ion-row class="row">
         <ion-col>Delivery status</ion-col>
         <ion-col>{{orderService.orderStatus}}</ion-col> <!-- add status to backend -->
-
       </ion-row>
-
-      <ion-row>
+      <div class="sep"></div>
+      <ion-row class="row">
         <ion-col>Date placed</ion-col>
         <ion-col>{{order.date}}</ion-col>
       </ion-row>
 
-      <ion-row>
-        <ion-col>Estimated delivery time</ion-col>
-        <ion-col>{{order.estimatedArrivalTime}}</ion-col>
-      </ion-row>
-
-      <ion-row>
+      <div class="sep"></div>
+      <ion-row class="row">
         <ion-col>Express</ion-col>
         <ion-col>{{order.isExpress ? "Yes" : "No"}}</ion-col>
       </ion-row>
-
-      <ion-row>
+      <div class="sep"></div>
+      <ion-row class="row">
         <ion-col>Fragile</ion-col>
         <ion-col>{{order.isFragile ? "Yes" : "No"}}</ion-col>
       </ion-row>
-
-      <ion-row>
+      <div class="sep"></div>
+      <ion-row class="row">
         <ion-col>Size</ion-col>
         <ion-col>{{order.size}}</ion-col>
       </ion-row>
-
-      <ion-row>
+      <div class="sep"></div>
+      <ion-row class="row">
         <ion-col>Delivery price</ion-col>
         <ion-col>{{order.price | currency:'EUR':true}}</ion-col>
+      </ion-row>
+      <div style="margin-bottom: 15px;" class="sep"></div>
+      <ion-row class="row">
+        <ion-col class="addressText">To:</ion-col>
+        <ion-col class="addressText">From:</ion-col>
+      </ion-row>
+      <ion-row class="row">
+        <ion-col>{{order.destinationAddress.street}} {{order.destinationAddress.houseNumber}}</ion-col>
+        <ion-col>{{order.sourceAddress.street}} {{order.sourceAddress.houseNumber}}</ion-col>
+      </ion-row>
+      <ion-row class="row">
+        <ion-col>{{order.destinationAddress.city}}, {{order.destinationAddress.country}}</ion-col>
+        <ion-col>{{order.sourceAddress.city}}, {{order.sourceAddress.country}}</ion-col>
+      </ion-row>
+      <ion-row class="row">
+        <ion-col>{{order.destinationAddress.postalCode}}</ion-col>
+        <ion-col>{{order.sourceAddress.postalCode}}</ion-col>
+      </ion-row>
+
+      <div style="margin-top: 10px;" class="sep"></div>
+      <ion-row class="row">
+        <ion-col>Estimated delivery time</ion-col>
+        <ion-col>{{order.estimatedArrivalTime}}</ion-col>
       </ion-row>
 
     </ion-grid>

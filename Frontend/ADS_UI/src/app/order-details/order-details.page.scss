@@ -1,0 +1,44 @@
+.row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.deliveryText {
+  text-align: center;
+  font-size: 16pt;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #E50882;
+}
+
+.addressText {
+  text-align: left;
+  font-size: 13pt;
+  font-weight: bold;
+}
+
+.sep {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.sep::before,
+.sep::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #727272;
+}
+
+.sep:not(:empty)::before {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.sep:not(:empty)::after {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+

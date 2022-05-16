@@ -23,8 +23,8 @@ export class OrderDetailsPage implements OnInit {
     this.orderService.getOrder(id)
       .subscribe(data => {
         this.order = data;
-        this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-M-d, h:mm a');
-        this.order.date = this.datePipe.transform(this.order.date, 'yyyy-M-d');
+        this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-MM-dd, h:mm a');
+        this.order.date = this.datePipe.transform(this.order.date, 'yyyy-MM-dd');
         console.log(data);
       });
   }
