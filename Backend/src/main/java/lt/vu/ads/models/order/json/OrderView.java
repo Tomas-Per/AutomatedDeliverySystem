@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.ads.models.EnumsOrder.Size;
 import lt.vu.ads.models.address.Address;
+import lt.vu.ads.models.address.json.AddressView;
 import lt.vu.ads.models.order.Order;
 
 import java.util.Date;
