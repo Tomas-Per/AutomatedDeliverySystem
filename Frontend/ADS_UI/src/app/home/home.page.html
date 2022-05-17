@@ -1,8 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+    <div class="toolBarContainer">
+      <ion-title>Home</ion-title>
+      <ion-buttons class="homeBtnContainer" slot="end">
+        <ion-button fill="clear" (click)="logOut()">
+          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -16,8 +21,8 @@
     </ion-button>
   </div>
 
-  <ion-text class="deliveryText">Your delivery history</ion-text>
-  <ion-list class="list">
+  <ion-text class="deliveryText" *ngIf="authService.isLoggedIn">Your delivery history</ion-text>
+  <ion-list class="list" *ngIf="authService.isLoggedIn">
     <ion-item button *ngFor="let package of packages"
       [routerLink]="['/', 'order-details', package.id, package.orderCode]" (click)="orderService.orderStatus = package.orderStatus">
       <ion-label>
@@ -27,5 +32,9 @@
     </ion-item>
 
   </ion-list>
+
+  <ion-button *ngIf="!authService.isLoggedIn" color="primary" shape="round" class="btns" [routerLink]="['/login']">
+    Login
+  </ion-button>
 
 </ion-content>

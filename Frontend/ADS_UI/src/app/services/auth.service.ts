@@ -14,6 +14,8 @@ providedIn: 'root'
 })
 export class AuthService {
 
+  isLoggedIn: boolean;
+
   constructor(
       private http: HttpClient,
       private storageService: StorageService,
@@ -40,6 +42,7 @@ export class AuthService {
 
   logout() {
       this.storageService.clear();
+      this.isLoggedIn = false;
       this.router.navigate(['/login']);
   }
 }
