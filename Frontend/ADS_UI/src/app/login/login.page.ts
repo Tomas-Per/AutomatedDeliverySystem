@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../auth-constants';
-import { LoggedInModel } from '../models/logged-in';
 import { LogInModel } from '../models/log-in';
 import { ToastService } from '../services/toast.service';
 

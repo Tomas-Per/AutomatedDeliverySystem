@@ -1,4 +1,4 @@
-import { Component, OnInit, Sanitizer } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { Address } from '../models/address';
