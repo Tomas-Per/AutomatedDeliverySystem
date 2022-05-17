@@ -6,7 +6,8 @@ ion-item {
 ng-container {
   opacity: 0;
 }
-ion-button {
+
+.btn {
   flex-flow: column;
   min-height: 5em;
   min-width: 8em;
