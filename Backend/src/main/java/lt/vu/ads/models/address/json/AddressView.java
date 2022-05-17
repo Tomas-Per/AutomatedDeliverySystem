@@ -30,4 +30,15 @@ public class AddressView {
                 .postalCode(address.getPostalCode())
                 .build();
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressView that = (AddressView) o;
+        return city.equals(that.city) &&
+                street.equals(that.street) &&
+                houseNumber.equals(that.houseNumber) &&
+                country.equals(that.country)&&
+                postalCode == that.postalCode;
+    }
 }

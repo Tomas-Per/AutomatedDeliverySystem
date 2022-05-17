@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lt.vu.ads.models.EnumsOrder.Size;
-import lt.vu.ads.models.address.json.AddressView;
+import lt.vu.ads.models.address.Address;
 import lt.vu.ads.models.order.Order;
 
 import java.util.Date;
@@ -15,8 +15,8 @@ import java.util.Date;
 public class OrderView {
     private Long id;
     private String orderCode;
-    private boolean isExpress;
-    private boolean isFragile;
+    private Boolean isExpress;
+    private Boolean isFragile;
     private Size size;
     private double price;
     private Date date;
