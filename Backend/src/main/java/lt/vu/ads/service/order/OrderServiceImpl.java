@@ -146,34 +146,42 @@ public class OrderServiceImpl implements OrderService {
         Date date = new Date();
         newOrder.setDate(date);
 
-        if (order.getSourceUserId() == null) {
-            throw new BadRequestException("Source user id missing");
+        User sourceUser = userRepository.findByFirstNameAndLastNameAndPhoneNumber(
+                order.getSourceUser().getFirstName(),
+                order.getSourceUser().getLastName(),
+                order.getSourceUser().getPhoneNumber()
+        );
+
+        if (sourceUser == null) {
+            sourceUser = new User();
+            sourceUser.setFirstName(order.getSourceUser().getFirstName());
+            sourceUser.setLastName(order.getSourceUser().getLastName());
+            sourceUser.setPhoneNumber(order.getSourceUser().getPhoneNumber());
+            sourceUser = userRepository.save(sourceUser);
         }
-        Optional<User> optionalUser = userRepository.findById(order.getSourceUserId());
-        optionalUser.ifPresent(newOrder::setSourceUser);
+        newOrder.setSourceUser(sourceUser);
 
         if (order.getDestinationUser() == null) {
             throw new BadRequestException("Destination user missing");
         }
-        User user = userRepository.findByFirstNameAndLastNameAndPhoneNumber(
+        User destinationUser = userRepository.findByFirstNameAndLastNameAndPhoneNumber(
                 order.getDestinationUser().getFirstName(),
                 order.getDestinationUser().getLastName(),
                 order.getDestinationUser().getPhoneNumber()
         );
-        if (user == null) {
-            user = new User();
-            user.setFirstName(order.getDestinationUser().getFirstName());
-            user.setLastName(order.getDestinationUser().getLastName());
-            user.setPhoneNumber(order.getDestinationUser().getPhoneNumber());
-            user = userRepository.save(user);
+        if (destinationUser == null) {
+            destinationUser = new User();
+            destinationUser.setFirstName(order.getDestinationUser().getFirstName());
+            destinationUser.setLastName(order.getDestinationUser().getLastName());
+            destinationUser.setPhoneNumber(order.getDestinationUser().getPhoneNumber());
+            destinationUser = userRepository.save(destinationUser);
         }
-        newOrder.setDestinationUser(user);
+        newOrder.setDestinationUser(destinationUser);
 
         newOrder.setEstimatedArrivalTime(calculateArrivalTime(order.isExpress()));
         if (order.getSize() == null) {
             throw new BadRequestException("Box size is null");
         }
-        //newOrder.setPrice(123456);
         newOrder.setPrice(calculatePrice(newOrder.getSourceAddress(), newOrder.getDestinationAddress(), newOrder.getSize()));
 
         return orderRepository.save(newOrder).getId();
