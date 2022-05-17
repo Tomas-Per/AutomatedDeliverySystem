@@ -15,7 +15,7 @@ public class OrderCreateView {
     private AddressView sourceAddress;
     private AddressView destinationAddress;
     private UserCreateOrderView destinationUser;
-    private Long sourceUserId;
+    private UserCreateOrderView sourceUser;
     private String orderCode;
 
     @Getter
