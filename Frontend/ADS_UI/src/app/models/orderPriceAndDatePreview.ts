@@ -1,10 +1,13 @@
-import { AddressPreview } from '../models/addressPreview';
+import { AddressPreview } from './addressPreview';
 import { Size } from './size';
+import { User } from './user';
 
 export class OrderPriceAndDatePreview {
-  sourceAddress: AddressPreview;
-  destinationAddress: AddressPreview;
   isFragile: boolean;
   size: Size;
   isExpress: boolean;
+  sourceAddress: AddressPreview;
+  destinationAddress: AddressPreview;
+  destinationUser: User;
+  sourceUser: User;
 }
