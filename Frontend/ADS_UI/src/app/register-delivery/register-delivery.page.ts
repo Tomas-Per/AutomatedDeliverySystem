@@ -6,6 +6,7 @@ import { AddressPreview } from '../models/addressPreview';
 import { Order } from '../models/order';
 import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
 import { Size } from '../models/size';
+import { User } from '../models/user';
 import { OrderConfimationModalComponent } from '../order-confimation-modal/order-confimation-modal.component';
 import { OrderService } from '../services/order.service';
 
@@ -23,6 +24,8 @@ export class RegisterDeliveryPage implements OnInit {
   orderPreview = new OrderPriceAndDatePreview();
   sourceAddress = new AddressPreview();
   destinationAddress = new AddressPreview();
+  sourceUser = new User();
+  destinationUser = new User();
   addresses = [new Address(), new Address()];
 
   constructor(private modalController: ModalController,
@@ -91,12 +94,24 @@ export class RegisterDeliveryPage implements OnInit {
         country: this.addresses[1].country,
         postalCode: this.addresses[1].postalCode
     };
+    this.sourceUser = {
+      firstName: this.addresses[0].firstName,
+      lastName: this.addresses[0].lastName,
+      phoneNumber: this.addresses[0].phoneNumber
+    };
+    this.destinationUser = {
+      firstName: this.addresses[1].firstName,
+      lastName: this.addresses[1].lastName,
+      phoneNumber: this.addresses[1].phoneNumber
+    };
     this.orderPreview = {
       sourceAddress: this.sourceAddress,
       destinationAddress: this.destinationAddress,
       isExpress: this.isExpress,
       isFragile: this.isFragile,
-      size: this.size
+      size: this.size,
+      sourceUser: this.sourceUser,
+      destinationUser: this.destinationUser
     };
     this.orderService.getOrderPreview(this.orderPreview).subscribe(res => {console.log(res);});
     const modal = await this.modalController.create({

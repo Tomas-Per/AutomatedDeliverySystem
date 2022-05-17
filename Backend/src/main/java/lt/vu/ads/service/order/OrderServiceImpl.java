@@ -4,13 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lt.vu.ads.constants.PriceConstants;
 import lt.vu.ads.exceptions.BadRequestException;
 import lt.vu.ads.exceptions.NotFoundException;
-import lt.vu.ads.models.EnumsOrder.Size;
 import lt.vu.ads.models.address.Address;
 import lt.vu.ads.models.order.Order;
-import lt.vu.ads.models.order.json.OrderCreateView;
-import lt.vu.ads.models.order.json.OrderEditView;
-import lt.vu.ads.models.order.json.OrderListView;
-import lt.vu.ads.models.order.json.OrderView;
+import lt.vu.ads.models.order.json.*;
+import lt.vu.ads.models.orderInfo.json.OrderInfoView;
 import lt.vu.ads.models.user.User;
 import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.repositories.AddressRepository;
@@ -50,8 +47,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderListView> getOrdersByEmail(String emailView) {
-        User user = userRepository.findByEmail(emailView);
+    public OrderInfoView getOrderInfoById(Long orderId) {
+        Order order = orderRepository.findOneById(orderId);
+        if (order == null) {
+            throw new NotFoundException("Order is not found with id: " + orderId);
+        }
+        if (order.getOrderInfoList() == null || order.getOrderInfoList().isEmpty()) {
+            throw new BadRequestException("Order status not available");
+        }
+
+        return OrderInfoView.of(order);
+    }
+
+    @Override
+    public List<OrderListView> getOrdersByEmail(UserEmailView emailView) {
+        User user = userRepository.findByEmail(emailView.getEmail());
         if (user == null) {
             throw new NotFoundException("");
         }
@@ -178,34 +188,12 @@ public class OrderServiceImpl implements OrderService {
         }
         newOrder.setDestinationUser(destinationUser);
 
-        newOrder.setEstimatedArrivalTime(calculateArrivalTime(order.isExpress()));
-        if (order.getSize() == null) {
-            throw new BadRequestException("Box size is null");
-        }
-        newOrder.setPrice(calculatePrice(newOrder.getSourceAddress(), newOrder.getDestinationAddress(), newOrder.getSize()));
-
+        newOrder.setEstimatedArrivalTime(calculatePriceAndDate(order).getEstimatedArrivalTime());
+        newOrder.setPrice(calculatePriceAndDate(order).getPrice());
         return orderRepository.save(newOrder).getId();
     }
 
-    public double calculatePrice(Address sourceAddress, Address destinationAddress, Size size) {
-
-        DistanceCalculator distanceCalculator = new DistanceCalculator();
-
-        double distance = distanceCalculator.calculateDistance(sourceAddress, destinationAddress);
-        double price = distance * PriceConstants.PRICE_PER_KM;
-
-        switch (size) {
-            case S:
-                price += PriceConstants.S_SIZE_PRICE;
-            case M:
-                price += PriceConstants.M_SIZE_PRICE;
-            case L:
-                price += PriceConstants.L_SIZE_PRICE;
-        }
-        return price;
-    }
-
-    public Date calculateArrivalTime(boolean isExpress) {
+    public Date calculateArrivalTime(Boolean isExpress) {
         Calendar calendar = Calendar.getInstance();
 
         if (isExpress) {
@@ -214,5 +202,40 @@ public class OrderServiceImpl implements OrderService {
         }
         calendar.add(Calendar.DAY_OF_YEAR, 5);
         return calendar.getTime();
+    }
+    public OrderPreviewView calculatePriceAndDate(OrderCreateView orderView) {
+
+        if(orderView.getSourceAddress()== null || orderView.getDestinationAddress() == null){
+            throw new BadRequestException("Source or destinations addresses are empty");
+        }
+        if(orderView.getSourceAddress().equals(orderView.getDestinationAddress())){
+            throw new BadRequestException("Source or destinations addresses are not allowed");
+        }
+        if(orderView.getSize() == null){
+            throw new BadRequestException("Box size is null");
+        }
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+
+        double distance = distanceCalculator.calculateDistance(orderView.getSourceAddress(), orderView.getDestinationAddress());
+        double price = distance * PriceConstants.PRICE_PER_KM;
+
+        switch (orderView.getSize()) {
+            case S:
+                price += PriceConstants.S_SIZE_PRICE;
+            case M:
+                price += PriceConstants.M_SIZE_PRICE;
+            case L:
+                price += PriceConstants.L_SIZE_PRICE;
+        }
+        if(orderView.getIsExpress()){
+            price += PriceConstants.EXPRESS_PRICE_ADDITION;
+        }
+
+        Date arrivalDate = calculateArrivalTime(orderView.getIsExpress());
+
+        orderView.setPrice(price);
+        orderView.setEstimatedArrivalTime(arrivalDate);
+        
+        return OrderPreviewView.of(orderView);
     }
 }
