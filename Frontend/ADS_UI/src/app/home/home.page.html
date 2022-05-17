@@ -3,8 +3,11 @@
     <div class="toolBarContainer">
       <ion-title>Home</ion-title>
       <ion-buttons class="homeBtnContainer" slot="end">
-        <ion-button fill="clear" (click)="logOut()">
+        <ion-button *ngIf="authService.isLoggedIn" fill="clear" (click)="logOut()">
           <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="!authService.isLoggedIn" fill="clear" [routerLink]="['/login']">
+          <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
     </div>
