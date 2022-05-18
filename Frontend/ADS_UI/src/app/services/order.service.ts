@@ -44,7 +44,7 @@ export class OrderService {
 
     const options = { headers, withCredintials: false};
     const url = environment.apiUrl + 'api/priceAndDate';
-    console.log(JSON.stringify(postData));
+
     return this.http.post<OrderDetailed>(url, JSON.stringify(postData), options);
   }
 }

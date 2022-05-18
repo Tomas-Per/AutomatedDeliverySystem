@@ -86,11 +86,11 @@ export class RegisterDeliveryPage implements OnInit {
     this.orderService.getOrderPreview(standartPreview).subscribe(res => {
       this.standartOrder.price = res.price;
       this.standartOrder.estimatedArrivalTime = res.estimatedArrivalTime;
-      console.log(this.standartOrder);});
-    this.orderService.getOrderPreview(expressPreview).subscribe(res => {
-      this.expressOrder.price = res.price;
-      this.expressOrder.estimatedArrivalTime = res.estimatedArrivalTime;
-      console.log(this.expressOrder);});
+      });
+    this.orderService.getOrderPreview(expressPreview).subscribe(res2 => {
+      this.expressOrder.price = res2.price;
+      this.expressOrder.estimatedArrivalTime = res2.estimatedArrivalTime;
+      });
   }
   async registerOrder() {
     this.order = {
