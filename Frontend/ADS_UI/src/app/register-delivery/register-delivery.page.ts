@@ -110,9 +110,9 @@ export class RegisterDeliveryPage implements OnInit {
       isExpress: this.isExpress,
       isFragile: this.isFragile,
       size: this.size,
-      sourceUser: this.sourceUser,
-      destinationUser: this.destinationUser
     };
+          // sourceUser: this.sourceUser,
+      // destinationUser: this.destinationUser
     this.orderService.getOrderPreview(this.orderPreview).subscribe(res => {console.log(res);});
     const modal = await this.modalController.create({
       component: OrderConfimationModalComponent,

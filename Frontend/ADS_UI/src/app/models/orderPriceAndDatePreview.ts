@@ -8,6 +8,6 @@ export class OrderPriceAndDatePreview {
   isExpress: boolean;
   sourceAddress: AddressPreview;
   destinationAddress: AddressPreview;
-  destinationUser: User;
-  sourceUser: User;
+  // destinationUser: User;
+  // sourceUser: User;
 }
