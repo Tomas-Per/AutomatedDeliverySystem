@@ -60,8 +60,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderListView> getOrdersByEmail(UserEmailView emailView) {
-        User user = userRepository.findByEmail(emailView.getEmail());
+    public List<OrderListView> getOrdersByEmail(String emailView) {
+        User user = userRepository.findByEmail(emailView);
         if (user == null) {
             throw new NotFoundException("");
         }
