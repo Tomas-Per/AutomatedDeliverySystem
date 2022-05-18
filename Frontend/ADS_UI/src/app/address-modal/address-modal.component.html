@@ -10,17 +10,17 @@
 <ion-content class="ion-padding">
   <ion-item>
     <ion-label position="floating">First name</ion-label>
-    <ion-input required type="text" [(ngModel)]="address.firstName"></ion-input>
+    <ion-input required type="text" [(ngModel)]="address.user.firstName"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Last name</ion-label>
-    <ion-input required type="text" [(ngModel)]="address.lastName"></ion-input>
+    <ion-input required type="text" [(ngModel)]="address.user.lastName"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Phone number</ion-label>
-    <ion-input required type="tel" value="+370" [(ngModel)]="address.phoneNumber"> </ion-input>
+    <ion-input required type="tel" value="+370" [(ngModel)]="address.user.phoneNumber"> </ion-input>
   </ion-item>
 
   <div class="separator">Address information</div>
@@ -28,37 +28,37 @@
     <ion-col size="7">
       <ion-item>
         <ion-label position="floating">Street</ion-label>
-        <ion-input required type="text" [(ngModel)]="address.street"> </ion-input>
+        <ion-input required type="text" [(ngModel)]="address.address.street"> </ion-input>
       </ion-item>
     </ion-col>
     <ion-col size="5">
       <ion-item>
         <ion-label position="floating">Number</ion-label>
-        <ion-input required type="text" [(ngModel)]="address.houseNumber">  </ion-input>
+        <ion-input required type="text" [(ngModel)]="address.address.houseNumber">  </ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
 
   <ion-item>
     <ion-label position="floating">Country</ion-label>
-    <ion-input required type="text" [(ngModel)]="address.country"></ion-input>
+    <ion-input required type="text" [(ngModel)]="address.address.country"></ion-input>
   </ion-item>
 
   <ion-row>
     <ion-col size="7">
       <ion-item>
         <ion-label position="floating">City</ion-label>
-        <ion-input required type="text" [(ngModel)]="address.city"> </ion-input>
+        <ion-input required type="text" [(ngModel)]="address.address.city"> </ion-input>
       </ion-item>
     </ion-col>
     <ion-col size="5">
       <ion-item>
         <ion-label position="floating">Postal code</ion-label>
-        <ion-input required type="text" [(ngModel)]="address.postalCode">  </ion-input>
+        <ion-input required type="text" [(ngModel)]="address.address.postalCode">  </ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
 
-  <ion-button [disabled]="!address?.firstName || !address?.lastName || !address?.street || !address?.houseNumber || !address?.country || !address?.city || !address?.postalCode" expand="block" (click)="onSave()" class="ion-margin-top">Save</ion-button>
+  <ion-button [disabled]="!address.user?.firstName || !address.user?.lastName || !address.address?.street || !address.address?.houseNumber || !address.address?.country || !address.address?.city || !address.address?.postalCode" expand="block" (click)="onSave()" class="ion-margin-top">Save</ion-button>
 </ion-content>
 

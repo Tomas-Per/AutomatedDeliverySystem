@@ -4,6 +4,7 @@ import { AddressModalComponent } from '../address-modal/address-modal.component'
 import { Address } from '../models/address';
 import { AddressPreview } from '../models/addressPreview';
 import { Order } from '../models/order';
+import { OrderDetailed } from '../models/orderDetailed';
 import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
 import { Size } from '../models/size';
 import { User } from '../models/user';
@@ -27,6 +28,8 @@ export class RegisterDeliveryPage implements OnInit {
   sourceUser = new User();
   destinationUser = new User();
   addresses = [new Address(), new Address()];
+  standartOrder = new OrderDetailed();
+  expressOrder = new OrderDetailed();
 
   constructor(private modalController: ModalController,
     public orderService: OrderService) { }
@@ -45,32 +48,49 @@ export class RegisterDeliveryPage implements OnInit {
       const index = this.addresses.findIndex(add => add.role === address.role);
       this.addresses[index] = newData;
     }
-    console.log(this.addresses);
+    this.sourceAddress = this.addresses[0].address;
+    this.destinationAddress = this.addresses[1].address;
+    this.sourceUser = this.addresses[0].user;
+    this.destinationUser = this.addresses[1].user;
+    this.orderPreview = {
+      sourceAddress: this.sourceAddress,
+      destinationAddress: this.destinationAddress,
+      isExpress: this.isExpress,
+      isFragile: this.isFragile,
+      size: this.size,
+      sourceUser: this.sourceUser,
+      destinationUser: this.destinationUser
+    };
   }
 
   ngOnInit() {
     this.addresses[0] = {role: 'Sender',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      street: '',
-      houseNumber: '',
-      country: '',
-      city: '',
-      postalCode: null};
+      user: this.sourceUser,
+      address: this.sourceAddress};
 
     this.addresses[1]={role: 'Receiver',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      street: '',
-      houseNumber: '',
-      country: '',
-      city: '',
-      postalCode: null};
-      this.isFragile = false;
-      this.isExpress = false;
-      this.size = 0;
+      user: this.destinationUser,
+      address: this.destinationAddress};
+
+    this.isFragile = false;
+    this.isExpress = false;
+    this.size = 0;
+    this.addresses[0].user.firstName ='';
+    this.addresses[1].user.firstName ='';
+  }
+  calculatePriceAndDate() {
+    const standartPreview = this.orderPreview;
+    const expressPreview = this.orderPreview;
+    standartPreview.isExpress = false;
+    expressPreview.isExpress = true;
+    this.orderService.getOrderPreview(standartPreview).subscribe(res => {
+      this.standartOrder.price = res.price;
+      this.standartOrder.estimatedArrivalTime = res.estimatedArrivalTime;
+      console.log(this.standartOrder);});
+    this.orderService.getOrderPreview(expressPreview).subscribe(res => {
+      this.expressOrder.price = res.price;
+      this.expressOrder.estimatedArrivalTime = res.estimatedArrivalTime;
+      console.log(this.expressOrder);});
   }
   async registerOrder() {
     this.order = {
@@ -80,40 +100,8 @@ export class RegisterDeliveryPage implements OnInit {
       size: this.size,
       isExpress: this.isExpress
     };
-    this.sourceAddress = {
-      city: this.addresses[0].city,
-      street: this.addresses[0].street,
-      houseNumber: this.addresses[0].houseNumber,
-      country: this.addresses[0].country,
-      postalCode: this.addresses[0].postalCode
-    };
-    this.destinationAddress = {
-        city: this.addresses[1].city,
-        street: this.addresses[1].street,
-        houseNumber: this.addresses[1].houseNumber,
-        country: this.addresses[1].country,
-        postalCode: this.addresses[1].postalCode
-    };
-    this.sourceUser = {
-      firstName: this.addresses[0].firstName,
-      lastName: this.addresses[0].lastName,
-      phoneNumber: this.addresses[0].phoneNumber
-    };
-    this.destinationUser = {
-      firstName: this.addresses[1].firstName,
-      lastName: this.addresses[1].lastName,
-      phoneNumber: this.addresses[1].phoneNumber
-    };
-    this.orderPreview = {
-      sourceAddress: this.sourceAddress,
-      destinationAddress: this.destinationAddress,
-      isExpress: this.isExpress,
-      isFragile: this.isFragile,
-      size: this.size,
-    };
-          // sourceUser: this.sourceUser,
-      // destinationUser: this.destinationUser
-    this.orderService.getOrderPreview(this.orderPreview).subscribe(res => {console.log(res);});
+
+
     const modal = await this.modalController.create({
       component: OrderConfimationModalComponent,
       componentProps: {

@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Address } from '../models/address';
+import { AddressPreview } from '../models/addressPreview';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-address-modal',
@@ -9,15 +11,7 @@ import { Address } from '../models/address';
   styleUrls: ['./address-modal.component.scss'],
 })
 export class AddressModalComponent implements OnInit {
-  // @Input() role: string;
-  // @Input() firstName: string;
-  // @Input() lastName: string;
-  // @Input() phoneNumber: string;
-  // @Input() street: string;
-  // @Input() houseNumber: string;
-  // @Input() country: string;
-  // @Input() city: string;
-  // @Input() postalCode: number;
+
   @Input() address: Address;
 
   nameInput = new FormControl('', Validators.required);
