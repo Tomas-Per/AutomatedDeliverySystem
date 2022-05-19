@@ -7,45 +7,45 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-card>
+<ion-card class="card">
   <ion-card-header>
     <ion-card-subtitle>TO</ion-card-subtitle>
-    <ion-card-title>{{order.receiver.firstName}} {{order.receiver.lastName}}</ion-card-title>
+    <ion-card-title>{{order.destinationUser.firstName}} {{order.destinationUser.lastName}}</ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
-    {{order.receiver.phoneNumber}} <br>
-    {{order.receiver.street}} {{order.receiver.houseNumber}} <br>
-    {{order.receiver.city}}, {{order.receiver.country}} <br>
-    {{order.receiver.postalCode}} <br>
+    {{order.destinationUser.phoneNumber}} <br>
+    {{order.destinationAddress.street}} {{order.destinationAddress.houseNumber}} <br>
+    {{order.destinationAddress.city}}, {{order.destinationAddress.country}} <br>
+    {{order.destinationAddress.postalCode}} <br>
+  </ion-card-content>
+</ion-card>
+
+<ion-card class="card">
+  <ion-card-header>
+    <ion-card-subtitle>FROM</ion-card-subtitle>
+    <ion-card-title>{{order.sourceUser.firstName}} {{order.sourceUser.lastName}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{order.sourceUser.phoneNumber}} <br>
+    {{order.sourceAddress.street}} {{order.sourceAddress.houseNumber}} <br>
+    {{order.sourceAddress.city}}, {{order.sourceAddress.country}} <br>
+    {{order.sourceAddress.postalCode}} <br>
   </ion-card-content>
 </ion-card>
 
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle>FROM</ion-card-subtitle>
-    <ion-card-title>{{order.sender.firstName}} {{order.sender.lastName}}</ion-card-title>
+    <ion-card-subtitle>Delivery info</ion-card-subtitle>
+    <!-- <ion-card-title *ngIf="order.isExpress">Express</ion-card-title>
+    <ion-card-title *ngIf="!order.isExpress">Standart</ion-card-title> -->
   </ion-card-header>
 
   <ion-card-content>
-    {{order.sender.phoneNumber}} <br>
-    {{order.sender.street}} {{order.sender.houseNumber}} <br>
-    {{order.sender.city}}, {{order.sender.country}} <br>
-    {{order.sender.postalCode}} <br>
+    Price: {{order.price | currency:'EUR':true}} <br>
+    Estimated delivery date: {{order.estimatedArrivalTime | date: 'MMM dd'}} <br>
   </ion-card-content>
 </ion-card>
 
-<!-- <ion-card>
-  <ion-card-header>
-    <ion-card-subtitle>Delivery</ion-card-subtitle>
-    <ion-card-title *ngIf="order.isExpress">Express</ion-card-title>
-    <ion-card-title *ngIf="!order.isExpress">Standart</ion-card-title>
-  </ion-card-header>
-
-  <ion-card-content>
-    {{order.size}} <br>
-    Fragile: {{order.isFragile}} <br>
-  </ion-card-content>
-</ion-card> -->
-
-<ion-button color="primary">Confirm</ion-button>
+<ion-button color="primary" (click)="registerOrder()">Confirm</ion-button>

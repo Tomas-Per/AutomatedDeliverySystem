@@ -5,11 +5,14 @@ import { Address } from '../models/address';
 import { AddressPreview } from '../models/addressPreview';
 import { Order } from '../models/order';
 import { OrderDetailed } from '../models/orderDetailed';
+import { OrderPreviewFull } from '../models/orderPreviewFull';
 import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
 import { Size } from '../models/size';
 import { User } from '../models/user';
 import { OrderConfimationModalComponent } from '../order-confimation-modal/order-confimation-modal.component';
+import { AuthService } from '../services/auth.service';
 import { OrderService } from '../services/order.service';
+import { StorageService } from '../services/storage.service';
 
 
 @Component({
@@ -28,11 +31,13 @@ export class RegisterDeliveryPage implements OnInit {
   sourceUser = new User();
   destinationUser = new User();
   addresses = [new Address(), new Address()];
-  standartOrder = new OrderDetailed();
-  expressOrder = new OrderDetailed();
+  standardOrder = new OrderPreviewFull();
+  expressOrder = new OrderPreviewFull();
 
   constructor(private modalController: ModalController,
-    public orderService: OrderService) { }
+    public orderService: OrderService,
+    public authService: AuthService,
+    private storageService: StorageService) { }
 
   async openAddressModal(address) {
     const modal = await this.modalController.create({
@@ -40,7 +45,6 @@ export class RegisterDeliveryPage implements OnInit {
       componentProps: {
         address }
     });
-
     await modal.present();
 
     const {data :newData, role} = await modal.onWillDismiss();
@@ -75,37 +79,58 @@ export class RegisterDeliveryPage implements OnInit {
     this.isFragile = false;
     this.isExpress = false;
     this.size = 0;
-    this.addresses[0].user.firstName ='';
-    this.addresses[1].user.firstName ='';
+    this.addresses[0].address.street ='';
+    this.addresses[1].address.street ='';
+    this.expressOrder.estimatedArrivalTime = '';
+    this.standardOrder.estimatedArrivalTime = '';
+
+    if(this.authService.isLoggedIn){
+      // get package previews
+      this.storageService.get('userData').then((data)=>{
+        this.addresses[0].user.firstName = data.firstName;
+        this.addresses[0].user.lastName = data.lastName;
+        this.addresses[0].user.phoneNumber = data.phoneNumber;
+      });
+    }
   }
   calculatePriceAndDate() {
-    const standartPreview = this.orderPreview;
-    const expressPreview = this.orderPreview;
-    standartPreview.isExpress = false;
-    expressPreview.isExpress = true;
-    this.orderService.getOrderPreview(standartPreview).subscribe(res => {
-      this.standartOrder.price = res.price;
-      this.standartOrder.estimatedArrivalTime = res.estimatedArrivalTime;
+    this.orderPreview.size = this.size;
+    // eslint-disable-next-line prefer-const
+    let standardPreview = this.orderPreview;
+    standardPreview.isExpress = false;
+    console.log(standardPreview);
+    this.orderService.getOrderPreview(standardPreview).subscribe(res => {
+      this.standardOrder.price = res.price;
+      this.standardOrder.estimatedArrivalTime = res.estimatedArrivalTime;
       });
+    // eslint-disable-next-line prefer-const
+    let expressPreview = this.orderPreview;
+    expressPreview.isExpress = true;
+    console.log(expressPreview);
     this.orderService.getOrderPreview(expressPreview).subscribe(res2 => {
       this.expressOrder.price = res2.price;
       this.expressOrder.estimatedArrivalTime = res2.estimatedArrivalTime;
       });
   }
   async registerOrder() {
-    this.order = {
-      sender: this.addresses[0],
-      receiver: this.addresses[1],
-      isFragile: this.isFragile,
-      size: this.size,
-      isExpress: this.isExpress
-    };
+    let confirmingOrder = new OrderPreviewFull();
+    if (this.isExpress) {
+      confirmingOrder = this.expressOrder;}
+    else {
+      confirmingOrder = this.standardOrder;}
 
+    confirmingOrder.destinationAddress = this.destinationAddress;
+    confirmingOrder.sourceAddress = this.sourceAddress;
+    confirmingOrder.destinationUser = this.destinationUser;
+    confirmingOrder.sourceUser = this.sourceUser;
+    confirmingOrder.isExpress = this.isExpress;
+    confirmingOrder.isFragile = this.isFragile;
+    confirmingOrder.size = this.size;
 
     const modal = await this.modalController.create({
       component: OrderConfimationModalComponent,
       componentProps: {
-        order: this.order }
+        order: confirmingOrder }
     });
     await modal.present();
 

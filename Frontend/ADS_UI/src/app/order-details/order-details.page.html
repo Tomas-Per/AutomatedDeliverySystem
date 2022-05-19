@@ -54,16 +54,16 @@
         <ion-col class="addressText">From:</ion-col>
       </ion-row>
       <ion-row class="row">
-        <ion-col>{{order.destinationAddress.street}} {{order.destinationAddress.houseNumber}}</ion-col>
-        <ion-col>{{order.sourceAddress.street}} {{order.sourceAddress.houseNumber}}</ion-col>
+        <ion-col>{{order.destinationAddress.address.street}} {{order.destinationAddress.address.houseNumber}}</ion-col>
+        <ion-col>{{order.sourceAddress.address.street}} {{order.sourceAddress.address.houseNumber}}</ion-col>
       </ion-row>
       <ion-row class="row">
-        <ion-col>{{order.destinationAddress.city}}, {{order.destinationAddress.country}}</ion-col>
-        <ion-col>{{order.sourceAddress.city}}, {{order.sourceAddress.country}}</ion-col>
+        <ion-col>{{order.destinationAddress.address.city}}, {{order.destinationAddress.address.country}}</ion-col>
+        <ion-col>{{order.sourceAddress.address.city}}, {{order.sourceAddress.address.country}}</ion-col>
       </ion-row>
       <ion-row class="row">
-        <ion-col>{{order.destinationAddress.postalCode}}</ion-col>
-        <ion-col>{{order.sourceAddress.postalCode}}</ion-col>
+        <ion-col>{{order.destinationAddress.address.postalCode}}</ion-col>
+        <ion-col>{{order.sourceAddress.address.postalCode}}</ion-col>
       </ion-row>
       <div style="margin-top: 10px;" class="sep"></div>
       <ion-row class="row">

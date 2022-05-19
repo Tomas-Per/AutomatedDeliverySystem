@@ -17,12 +17,12 @@
       <ion-item button (click)="openAddressModal(address)">
         <ion-label >
           <h2>{{address.role}}'s information</h2>
-          <p *ngIf="address.user.firstName === ''">Fill in the information</p>
-          <p *ngIf="address.user.firstName !== ''">{{address.user.firstName}} {{address.user.lastName}}</p>
-          <p *ngIf="address.user.firstName !== ''">{{address.user.phoneNumber}}</p>
-          <p *ngIf="address.user.firstName !== ''">{{address.address.street}} {{address.address.houseNumber}}, {{address.address.city}}</p>
-          <p *ngIf="address.user.firstName !== ''">{{address.address.country}}</p>
-          <p *ngIf="address.user.firstName !== ''">{{address.address.postalCode}}</p>
+          <p *ngIf="address.address.street === ''">Fill in the information</p>
+          <p *ngIf="address.address.street !== ''">{{address.user.firstName}} {{address.user.lastName}}</p>
+          <p *ngIf="address.address.street !== ''">{{address.user.phoneNumber}}</p>
+          <p *ngIf="address.address.street !== ''">{{address.address.street}} {{address.address.houseNumber}}, {{address.address.city}}</p>
+          <p *ngIf="address.address.street !== ''">{{address.address.country}}</p>
+          <p *ngIf="address.address.street !== ''">{{address.address.postalCode}}</p>
         </ion-label>
       </ion-item>
     </ng-container>
@@ -47,8 +47,8 @@
       <ion-button class="btn" (click)="isExpress=false" [class.expressButton]="!isExpress">
         <ion-label>
           <h3>Standard</h3>
-          <h1><b>2-3 days</b></h1>
-          <h3>{{standartOrder.price | currency:'EUR':true}}</h3>
+          <h1><b>{{ standardOrder.estimatedArrivalTime | date: 'MMM dd'  }}</b></h1>
+          <h3>{{standardOrder.price | currency:'EUR':true}}</h3>
         </ion-label>
       </ion-button>
     </ion-col>
@@ -57,7 +57,7 @@
       <ion-button class="btn" (click)="isExpress=true" [class.expressButton]="isExpress">
         <ion-label>
           <h3>Express</h3>
-          <h1><b>1 day</b></h1>
+          <h1><b>{{ expressOrder.estimatedArrivalTime | date: 'MMM dd'  }}</b></h1>
           <h3>{{expressOrder.price | currency:'EUR':true}}</h3>
         </ion-label>
       </ion-button>

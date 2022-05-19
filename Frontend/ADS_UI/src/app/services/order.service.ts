@@ -6,6 +6,7 @@ import { OrderPreview } from '../models/orderPreview';
 import { OrderDetailed } from '../models/orderDetailed';
 import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
 import { Order } from '../models/order';
+import { OrderPreviewFull } from '../models/orderPreviewFull';
 
 @Injectable({
   providedIn: 'root'
@@ -38,12 +39,21 @@ export class OrderService {
 
     return this.http.get<OrderDetailed>(url, options);
   }
-  getOrderPreview(postData: OrderPriceAndDatePreview): Observable<OrderDetailed> {
+  getOrderPreview(postData: OrderPriceAndDatePreview): Observable<OrderPreviewFull> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     const options = { headers, withCredintials: false};
     const url = environment.apiUrl + 'api/priceAndDate';
+
+    return this.http.post<OrderPreviewFull>(url, JSON.stringify(postData), options);
+  }
+  postOrder(postData: OrderPreviewFull):  Observable<OrderDetailed> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    const options = { headers, withCredintials: false};
+    const url = environment.apiUrl + 'api/orders';
 
     return this.http.post<OrderDetailed>(url, JSON.stringify(postData), options);
   }
