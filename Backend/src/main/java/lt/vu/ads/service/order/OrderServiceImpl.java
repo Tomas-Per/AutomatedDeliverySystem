@@ -47,6 +47,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public OrderView getOrderByOrderCode(String orderCode){
+        Order order = orderRepository.findByOrderCode(orderCode);
+        if (order == null) {
+            throw new NotFoundException("Order is not found with orderCode: " + orderCode);
+        }
+        return OrderView.of(order);
+    }
+
+    @Override
     public OrderInfoView getOrderInfoById(Long orderId) {
         Order order = orderRepository.findOneById(orderId);
         if (order == null) {
