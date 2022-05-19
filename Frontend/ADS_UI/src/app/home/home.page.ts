@@ -45,7 +45,9 @@ export class HomePage implements OnInit{
     }
 
   }
-
+  navigateToDeliveryTracking() {
+    this.router.navigate(['/tracking-search/']);
+  }
   navigateToDeliveryRegister() {
     this.router.navigate(['/register-delivery']);
   }

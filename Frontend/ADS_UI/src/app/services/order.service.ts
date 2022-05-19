@@ -39,6 +39,15 @@ export class OrderService {
 
     return this.http.get<OrderDetailed>(url, options);
   }
+  getOrderByCode(orderCode: string): Observable<OrderDetailed> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    const options = { headers, withCredintials: false};
+    const url = environment.apiUrl + 'api/order/byOrderCode/' + orderCode;
+
+    return this.http.get<OrderDetailed>(url, options);
+  }
   getOrderPreview(postData: OrderPriceAndDatePreview): Observable<OrderPreviewFull> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
