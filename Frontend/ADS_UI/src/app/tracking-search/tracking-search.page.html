@@ -43,7 +43,7 @@
       </ion-input>
     </ion-col>
     <ion-col>
-      <ion-input type="text" #otp8 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[7]" (ionInput)="track()">
+      <ion-input type="text" #otp8 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[7]" (keyup)="track()">
       </ion-input>
     </ion-col>
   </ion-row>
