@@ -222,10 +222,13 @@ public class OrderServiceImpl implements OrderService {
         switch (orderView.getSize()) {
             case S:
                 price += PriceConstants.S_SIZE_PRICE;
+                break;
             case M:
                 price += PriceConstants.M_SIZE_PRICE;
+                break;
             case L:
                 price += PriceConstants.L_SIZE_PRICE;
+                break;
         }
         if(orderView.getIsExpress()){
             price += PriceConstants.EXPRESS_PRICE_ADDITION;
