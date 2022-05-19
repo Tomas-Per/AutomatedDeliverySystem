@@ -21,6 +21,8 @@ public interface OrderService {
 
     OrderInfoView getOrderInfoById(Long orderId);
 
+    OrderView getOrderByOrderCode(String orderCode);
+
     List<OrderListView> getOrdersByEmail(UserEmailView emailView);
 
     OrderView updateOrder(Long orderId, OrderEditView orderDetails);
