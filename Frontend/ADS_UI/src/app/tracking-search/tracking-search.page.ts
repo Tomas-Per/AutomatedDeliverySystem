@@ -18,6 +18,7 @@ export class TrackingSearchPage implements OnInit {
     el.setFocus();
   }
   track() {
-    console.log(this.opts);
+    const str = this.opts.join('');
+    console.log(str);
   }
 }

@@ -22,6 +22,7 @@ export class OrderDetailsPage implements OnInit {
 
     this.orderService.getOrder(id)
       .subscribe(data => {
+        console.log(data);
         this.order = data;
         this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-MM-dd, h:mm a');
         this.order.date = this.datePipe.transform(this.order.date, 'yyyy-MM-dd');
