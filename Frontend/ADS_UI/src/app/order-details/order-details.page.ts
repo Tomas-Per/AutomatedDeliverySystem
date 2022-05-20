@@ -36,6 +36,7 @@ export class OrderDetailsPage implements OnInit {
     const modal = await this.modalController.create({
       component: ChangeTimeModalComponent,
       componentProps: {
+        id: this.order.id,
         estimatedDate: this.order.estimatedArrivalTime }
     });
 
