@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { OrderDetailed } from '../models/orderDetailed';
 import { OrderService } from '../services/order.service';
 import { DatePipe } from '@angular/common';
+import { ModalController } from '@ionic/angular';
+import { ChangeTimeModalComponent } from '../change-time-modal/change-time-modal.component';
 
 @Component({
   selector: 'app-order-details',
@@ -14,7 +16,8 @@ export class OrderDetailsPage implements OnInit {
   order: OrderDetailed = null;
   constructor(public orderService: OrderService,
     private activatedRoute: ActivatedRoute,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private modalController: ModalController
     ) { }
 
   ngOnInit() {
@@ -27,6 +30,16 @@ export class OrderDetailsPage implements OnInit {
         this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-MM-dd, h:mm a');
         this.order.date = this.datePipe.transform(this.order.date, 'yyyy-MM-dd');
       });
+  }
+
+  async openTimePickerModal() {
+    const modal = await this.modalController.create({
+      component: ChangeTimeModalComponent,
+      componentProps: {
+        estimatedDate: this.order.estimatedArrivalTime }
+    });
+
+    await modal.present();
   }
 
 }

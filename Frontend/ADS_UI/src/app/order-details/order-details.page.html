@@ -73,4 +73,39 @@
 
     </ion-grid>
   </div>
+  <ion-button id="open-modal" (click)="openTimePickerModal()">Change estimated time</ion-button>
+  <!-- <ion-modal trigger="open-modal" backdrop-dismiss="true">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <div class="toolBarContainer">
+            <ion-title>Order details</ion-title>
+            <ion-buttons class="homeBtnContainer" slot="end">
+              <ion-button fill="clear" [routerLink]="['/home']">
+                <ion-icon slot="icon-only" name="grid"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-label class="headerModal"><h1>FROM</h1></ion-label>
+        <ion-datetime presentation="time" minuteValues="0,15,30,45" class="justifyContent"></ion-datetime>
+        <ion-label class="headerModal"><h1>TO</h1></ion-label>
+        <ion-datetime presentation="time" minuteValues="0,15,30,45" class="justifyContent"></ion-datetime>
+        <ion-row>
+          <ion-col class="justifyContent"><ion-button [routerLink]="['/', 'order-details', order.id, order.orderCode]">Close</ion-button></ion-col>
+          <ion-col class="justifyContent"><ion-button>Save</ion-button></ion-col>
+        </ion-row>
+      </ion-content>
+    </ng-template>
+  </ion-modal> -->
+  <!-- <ion-label class="headerModal"><h1>FROM</h1></ion-label>
+  <ion-datetime presentation="time" minuteValues="0,15,30,45" class="justifyContent"></ion-datetime>
+  <ion-label class="headerModal"><h1>TO</h1></ion-label>
+  <ion-datetime presentation="time" minuteValues="0,15,30,45" class="justifyContent"></ion-datetime>
+  <ion-row>
+    <ion-col class="justifyContent"><ion-button>Close</ion-button></ion-col>
+    <ion-col class="justifyContent"><ion-button>Save</ion-button></ion-col>
+  </ion-row> -->
 </ion-content>

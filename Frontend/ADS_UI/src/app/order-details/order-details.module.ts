@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { OrderDetailsPageRoutingModule } from './order-details-routing.module';
 
 import { OrderDetailsPage } from './order-details.page';
+import { ChangeTimeModalComponent } from '../change-time-modal/change-time-modal.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { OrderDetailsPage } from './order-details.page';
     IonicModule,
     OrderDetailsPageRoutingModule
   ],
-  declarations: [OrderDetailsPage]
+  declarations: [OrderDetailsPage, ChangeTimeModalComponent],
+  entryComponents: [ChangeTimeModalComponent]
 })
 export class OrderDetailsPageModule {}

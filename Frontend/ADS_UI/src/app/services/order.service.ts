@@ -7,6 +7,7 @@ import { OrderDetailed } from '../models/orderDetailed';
 import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
 import { Order } from '../models/order';
 import { OrderPreviewFull } from '../models/orderPreviewFull';
+import { EditOrder } from '../models/editOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -65,5 +66,14 @@ export class OrderService {
     const url = environment.apiUrl + 'api/orders';
 
     return this.http.post<OrderDetailed>(url, JSON.stringify(postData), options);
+  }
+  editOrder(id: string, postData: EditOrder):  Observable<OrderDetailed> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    const options = { headers, withCredintials: false};
+    const url = environment.apiUrl + 'api/order/'+id;
+
+    return this.http.patch<OrderDetailed>(url, JSON.stringify(postData), options);
   }
 }
