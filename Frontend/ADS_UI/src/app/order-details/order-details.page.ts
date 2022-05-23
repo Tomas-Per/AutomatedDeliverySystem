@@ -13,7 +13,8 @@ import { ChangeTimeModalComponent } from '../change-time-modal/change-time-modal
 })
 export class OrderDetailsPage implements OnInit {
 
-  order: OrderDetailed = null;
+  order: OrderDetailed;
+
   constructor(public orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private datePipe: DatePipe,

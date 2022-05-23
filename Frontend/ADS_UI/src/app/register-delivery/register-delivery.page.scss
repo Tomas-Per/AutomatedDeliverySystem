@@ -3,41 +3,31 @@ ion-item {
   margin: 1rem;
 }
 
-ng-container {
-  opacity: 0;
-}
-
 .btn {
   flex-flow: column;
   min-height: 5em;
   min-width: 8em;
   opacity: 60%;
-
 }
-// ion-button:focus {
-//   opacity: 20%;
-// }
+
 .expressButton {
   opacity: 100%;
 }
+
 .sizeButton {
   width: 100%;
   height: auto;
   opacity: 100%;
 }
+
 img {
   opacity: 60%;
 }
-// sizeButton {
-//   background-color: transparent;
-//   background-size: contain;
-//   background: url('sizeButtonM.png') no-repeat center center;
-//   background: url('sizeButtonS.png') no-repeat center center;
-//   background: url('sizeButtonL.png') no-repeat center center;
-// }
+
 .button-inner {
   flex-flow: column;
 }
+
 .justify-content-center {
   justify-content: center;
   display: flex;
