@@ -10,6 +10,7 @@ import { ToastService } from '../services/toast.service';
 })
 export class TrackingSearchPage implements OnInit {
   opts= ['', '', '', '', '', '', '', ''];
+
   constructor(
     private router: Router,
     public orderService: OrderService,
@@ -17,18 +18,23 @@ export class TrackingSearchPage implements OnInit {
 
   ngOnInit() {
   }
+
   _searchTracking(event) {
     console.log(event.detail.value);
   }
+
   next(el) {
     el.setFocus();
     const str = this.opts.join('');
     if(str.length === 8) { this.track();}
   }
+
   track() {
     const str = this.opts.join('');
     this.orderService.getOrderByCode(str).subscribe( res => {
-      if(res){this.router.navigate(['/order-details/'+res.id+'/'+res.orderCode]);}
+      if(res){
+        this.router.navigate(['/order-details/'+res.id+'/'+res.orderCode]);
+      }
       else{this.toastService.presentToast('Order not found, check if the order code is correct');}
     },(error: any) => {
       this.toastService.presentToast('Order not found, check if the order code is correct');
