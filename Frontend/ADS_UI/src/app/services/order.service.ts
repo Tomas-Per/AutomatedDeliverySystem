@@ -5,7 +5,6 @@ import { environment } from '../../environments/environment';
 import { OrderPreview } from '../models/orderPreview';
 import { OrderDetailed } from '../models/orderDetailed';
 import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
-import { Order } from '../models/order';
 import { OrderPreviewFull } from '../models/orderPreviewFull';
 import { EditOrder } from '../models/editOrder';
 

@@ -4,7 +4,6 @@ import { AddressModalComponent } from '../address-modal/address-modal.component'
 import { Address } from '../models/address';
 import { AddressPreview } from '../models/addressPreview';
 import { Order } from '../models/order';
-import { OrderDetailed } from '../models/orderDetailed';
 import { OrderPreviewFull } from '../models/orderPreviewFull';
 import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
 import { Size } from '../models/size';

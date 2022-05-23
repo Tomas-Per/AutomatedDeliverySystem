@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { ChangeTimeModalComponent } from './change-time-modal/change-time-modal.component';
 
 @NgModule({
   declarations: [AppComponent],

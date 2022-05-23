@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
-import { AuthConstants } from '../auth-constants';
 import { LoggedInModel } from '../models/logged-in';
 import { LogInModel } from '../models/log-in';
 import { RegisterModel } from '../models/register';

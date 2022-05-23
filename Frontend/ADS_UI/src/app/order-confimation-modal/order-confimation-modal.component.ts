@@ -1,9 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Order } from '../models/order';
-import { OrderDetailed } from '../models/orderDetailed';
 import { OrderPreviewFull } from '../models/orderPreviewFull';
-import { OrderPriceAndDatePreview } from '../models/orderPriceAndDatePreview';
 import { OrderService } from '../services/order.service';
 import { ToastService } from '../services/toast.service';
 

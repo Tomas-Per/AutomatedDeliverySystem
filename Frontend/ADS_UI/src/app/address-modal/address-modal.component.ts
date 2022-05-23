@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Address } from '../models/address';
-import { AddressPreview } from '../models/addressPreview';
-import { User } from '../models/user';
 
 @Component({
   selector: 'app-address-modal',
