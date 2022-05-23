@@ -10,23 +10,17 @@ import { OrderService } from '../services/order.service';
   styleUrls: ['./change-time-modal.component.scss'],
 })
 export class ChangeTimeModalComponent implements OnInit {
+
+  @Input() id: string;
+  @Input() estimatedDate: string;
+
   editableDate = new EditOrder();
   orderDetailed = new OrderDetailed();
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  @Input() id: string;
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  @Input() estimatedDate: string;
 
   constructor(private modalController: ModalController,
     private orderService: OrderService) { }
 
   ngOnInit() {
-    console.log(this.estimatedDate);
-    // this.estimatedDate.setHours(0);
-    // this.estimatedDate.setMinutes(0);
-    // this.estimatedDate.setSeconds(0);
-    // this.estimatedDate.setMilliseconds(0);
   }
 
   dismissModal() {
