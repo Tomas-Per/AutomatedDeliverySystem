@@ -24,19 +24,18 @@ export class HomePage implements OnInit{
   ngOnInit() {
     if(this.authService.isLoggedIn){
       // get package previews
-      this.storageService.get('email').then((data)=>{
-        console.log(data);
-        this.email = data;
+      this.storageService.get('email').then((email)=>{
+        this.email = email;
         this.orderService.getOrderList(this.email)
-          .subscribe(data1 => {
-            this.packages = data1;
-            this.packages.forEach(element => {
-              if(element.orderStatus === 'IN_DELIVERY') {
-                element.orderStatus = 'In delivery';
-              } else if (element.orderStatus === 'ARRIVED') {
-                  element.orderStatus = 'Arrived';
+          .subscribe(orders => {
+            this.packages = orders;
+            this.packages.forEach(order => {
+              if(order.orderStatus === 'IN_DELIVERY') {
+                order.orderStatus = 'In delivery';
+              } else if (order.orderStatus === 'ARRIVED') {
+                order.orderStatus = 'Arrived';
               } else {
-                  element.orderStatus = 'Waiting for courier';
+                order.orderStatus = 'Waiting for courier';
               };
             });
           });
