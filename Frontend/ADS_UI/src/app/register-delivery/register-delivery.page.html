@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="toolBarContainer">
+      <ion-title>Register delivery</ion-title>
+      <ion-buttons class="homeBtnContainer" slot="end">
+        <ion-button fill="clear" [routerLink]="['/home']">
+          <ion-icon slot="icon-only" name="grid"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ng-container *ngFor="let address of addresses">
+      <ion-item button (click)="openAddressModal(address)">
+        <ion-label >
+          <h2>{{address.role}}'s information</h2>
+          <p *ngIf="address.address.street === ''">Fill in the information</p>
+          <p *ngIf="address.address.street !== ''">{{address.user.firstName}} {{address.user.lastName}}</p>
+          <p *ngIf="address.address.street !== ''">{{address.user.phoneNumber}}</p>
+          <p *ngIf="address.address.street !== ''">{{address.address.street}} {{address.address.houseNumber}}, {{address.address.city}}</p>
+          <p *ngIf="address.address.street !== ''">{{address.address.country}}</p>
+          <p *ngIf="address.address.street !== ''">{{address.address.postalCode}}</p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+  <ion-item color="transparent">
+    <ion-label>Fragile</ion-label>
+    <ion-checkbox slot="start" color="primary"></ion-checkbox>
+  </ion-item>
+  <ion-row>
+    <ion-col size="4" class="justify-content-center">
+      <img src="../../assets/sizeButtonS.png" style="width : 90% ; height : auto" (click)="size=0; calculatePriceAndDate()" [class.sizeButton]="size===0">
+    </ion-col>
+    <ion-col size="4" class="justify-content-center">
+      <img src="../../assets/sizeButtonM.png" style="width : 90% ; height : auto" (click)="size=1; calculatePriceAndDate()" [class.sizeButton]="size===1" >
+    </ion-col>
+    <ion-col size="4" class="justify-content-center">
+      <img src="../../assets/sizeButtonL.png" style="width : 90% ; height : auto" (click)="size=2; calculatePriceAndDate()" [class.sizeButton]="size===2" >
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center text-center>
+    <ion-col size="6" class="justify-content-center">
+      <ion-button class="btn" (click)="isExpress=false" [class.expressButton]="!isExpress">
+        <ion-label>
+          <h3>Standard</h3>
+          <h1><b>{{ standardOrder.estimatedArrivalTime | date: 'MMM dd'  }}</b></h1>
+          <h3>{{standardOrder.price | currency:'EUR':true}}</h3>
+        </ion-label>
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="6" class="justify-content-center">
+      <ion-button class="btn" (click)="isExpress=true" [class.expressButton]="isExpress">
+        <ion-label>
+          <h3>Express</h3>
+          <h1><b>{{ expressOrder.estimatedArrivalTime | date: 'MMM dd'  }}</b></h1>
+          <h3>{{expressOrder.price | currency:'EUR':true}}</h3>
+        </ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-button color="primary" [disabled]="addresses[0].user.firstName ==='' || addresses[1].user.firstName ===''" expand="block" (click)="registerOrder()" class="ion-margin-top btn">Save</ion-button>
+
+</ion-content>

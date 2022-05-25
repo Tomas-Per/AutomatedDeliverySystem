@@ -47,6 +47,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public OrderView getOrderByOrderCode(String orderCode){
+        Order order = orderRepository.findByOrderCode(orderCode);
+        if (order == null) {
+            throw new NotFoundException("Order is not found with orderCode: " + orderCode);
+        }
+        return OrderView.of(order);
+    }
+
+    @Override
     public OrderInfoView getOrderInfoById(Long orderId) {
         Order order = orderRepository.findOneById(orderId);
         if (order == null) {
@@ -60,8 +69,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderListView> getOrdersByEmail(UserEmailView emailView) {
-        User user = userRepository.findByEmail(emailView.getEmail());
+    public List<OrderListView> getOrdersByEmail(String emailView) {
+        User user = userRepository.findByEmail(emailView);
         if (user == null) {
             throw new NotFoundException("");
         }
@@ -156,28 +165,37 @@ public class OrderServiceImpl implements OrderService {
         Date date = new Date();
         newOrder.setDate(date);
 
-        if (order.getSourceUserId() == null) {
-            throw new BadRequestException("Source user id missing");
+        User sourceUser = userRepository.findByFirstNameAndLastNameAndPhoneNumber(
+                order.getSourceUser().getFirstName(),
+                order.getSourceUser().getLastName(),
+                order.getSourceUser().getPhoneNumber()
+        );
+
+        if (sourceUser == null) {
+            sourceUser = new User();
+            sourceUser.setFirstName(order.getSourceUser().getFirstName());
+            sourceUser.setLastName(order.getSourceUser().getLastName());
+            sourceUser.setPhoneNumber(order.getSourceUser().getPhoneNumber());
+            sourceUser = userRepository.save(sourceUser);
         }
-        Optional<User> optionalUser = userRepository.findById(order.getSourceUserId());
-        optionalUser.ifPresent(newOrder::setSourceUser);
+        newOrder.setSourceUser(sourceUser);
 
         if (order.getDestinationUser() == null) {
             throw new BadRequestException("Destination user missing");
         }
-        User user = userRepository.findByFirstNameAndLastNameAndPhoneNumber(
+        User destinationUser = userRepository.findByFirstNameAndLastNameAndPhoneNumber(
                 order.getDestinationUser().getFirstName(),
                 order.getDestinationUser().getLastName(),
                 order.getDestinationUser().getPhoneNumber()
         );
-        if (user == null) {
-            user = new User();
-            user.setFirstName(order.getDestinationUser().getFirstName());
-            user.setLastName(order.getDestinationUser().getLastName());
-            user.setPhoneNumber(order.getDestinationUser().getPhoneNumber());
-            user = userRepository.save(user);
+        if (destinationUser == null) {
+            destinationUser = new User();
+            destinationUser.setFirstName(order.getDestinationUser().getFirstName());
+            destinationUser.setLastName(order.getDestinationUser().getLastName());
+            destinationUser.setPhoneNumber(order.getDestinationUser().getPhoneNumber());
+            destinationUser = userRepository.save(destinationUser);
         }
-        newOrder.setDestinationUser(user);
+        newOrder.setDestinationUser(destinationUser);
 
         newOrder.setEstimatedArrivalTime(calculatePriceAndDate(order).getEstimatedArrivalTime());
         newOrder.setPrice(calculatePriceAndDate(order).getPrice());

@@ -28,13 +28,18 @@ public class OrderController {
         return orderService.getOrderById(orderId);
     }
 
+    @GetMapping("/order/byOrderCode/{orderCode}")
+    public OrderView getOrderByOrderCode(@PathVariable(value = "orderCode") String orderCode){
+        return orderService.getOrderByOrderCode(orderCode);
+    }
+
     @GetMapping("/order/info/{id}")
     public OrderInfoView getOrderInfoById(@PathVariable(value = "id") Long orderId) {
         return orderService.getOrderInfoById(orderId);
     }
 
     @GetMapping("/order/email")
-    public List<OrderListView> getOrderByEmail(@RequestBody UserEmailView emailView) {
+    public List<OrderListView> getOrderByEmail(@RequestParam("email") String emailView) {
         return orderService.getOrdersByEmail(emailView);
     }
 

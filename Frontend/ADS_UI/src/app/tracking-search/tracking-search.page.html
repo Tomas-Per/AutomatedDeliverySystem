@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="toolBarContainer">
+      <ion-title>Track delivery</ion-title>
+      <ion-buttons class="homeBtnContainer" slot="end">
+        <ion-button fill="clear" [routerLink]="['/home']">
+          <ion-icon slot="icon-only" name="grid"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-label class="codeHeader"><h1><b>Type the order code</b></h1></ion-label>
+  <ion-row style="margin-left: 30px; margin-right: 30px;">
+    <ion-col>
+      <ion-input type="text" #otp1 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[0]" (ionInput)="next(otp2)">
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input type="text" #otp2 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[1]" (ionInput)="next(otp3)">
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input type="text" #otp3 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[2]" (ionInput)="next(otp4)">
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input type="text" #otp4 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[3]" (ionInput)="next(otp5)">
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input type="text" #otp5 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[4]" (ionInput)="next(otp6)">
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input type="text" #otp6 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[5]" (ionInput)="next(otp7)">
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input type="text" #otp7 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[6]" (ionInput)="next(otp8)">
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input type="text" #otp8 class="otp" pattern="[a-zA-Z0-9]" maxlength="1" size="1" [(ngModel)]="opts[7]" (keyup)="track()">
+      </ion-input>
+    </ion-col>
+  </ion-row>
+</ion-content>

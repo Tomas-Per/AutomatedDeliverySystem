@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.ads.models.EnumsOrder.Size;
 import lt.vu.ads.models.address.Address;
+import lt.vu.ads.models.address.json.AddressView;
 import lt.vu.ads.models.order.Order;
 
 import java.util.Date;
@@ -23,6 +24,8 @@ public class OrderView {
     private Date estimatedArrivalTime;
     private Date convenientArrivalTimeFrom;
     private Date convenientArrivalTimeTo;
+    private AddressView sourceAddress;
+    private AddressView destinationAddress;
     public static OrderView of(Order order) {
         return OrderView.builder()
                 .id(order.getId())
@@ -35,6 +38,8 @@ public class OrderView {
                 .estimatedArrivalTime(order.getEstimatedArrivalTime())
                 .convenientArrivalTimeFrom(order.getConvenientArrivalTimeFrom())
                 .convenientArrivalTimeTo(order.getConvenientArrivalTimeTo())
+                .sourceAddress(AddressView.of(order.getSourceAddress()))
+                .destinationAddress(AddressView.of(order.getDestinationAddress()))
                 .build();
     }
 }

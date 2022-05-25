@@ -8,9 +8,31 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'register-delivery',
+    loadChildren: () => import('./register-delivery/register-delivery.module').then( m => m.RegisterDeliveryPageModule)
+  },
+  {
+    path: 'order-details/:id/:orderCode',
+    loadChildren: () => import('./order-details/order-details.module').then( m => m.OrderDetailsPageModule)
+  },  {
+    path: 'tracking-search',
+    loadChildren: () => import('./tracking-search/tracking-search.module').then( m => m.TrackingSearchPageModule)
+  },
+
+
+
 ];
 
 @NgModule({
