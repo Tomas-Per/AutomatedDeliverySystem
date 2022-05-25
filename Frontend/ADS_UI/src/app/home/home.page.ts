@@ -22,27 +22,27 @@ export class HomePage implements OnInit{
     ) {}
 
   ngOnInit() {
-    if(this.authService.isLoggedIn){
-      // get package previews
-      this.storageService.get('email').then((email)=>{
-        this.email = email;
-        this.orderService.getOrderList(this.email)
-          .subscribe(orders => {
-            this.packages = orders;
-            this.packages.forEach(order => {
-              if(order.orderStatus === 'IN_DELIVERY') {
-                order.orderStatus = 'In delivery';
-              } else if (order.orderStatus === 'ARRIVED') {
-                order.orderStatus = 'Arrived';
-              } else {
-                order.orderStatus = 'Waiting for courier';
-              };
+    this.router.events.subscribe(() =>{
+      if(this.authService.isLoggedIn){
+        // get package previews
+        this.storageService.get('email').then((email)=>{
+          this.email = email;
+          this.orderService.getOrderList(this.email)
+            .subscribe(orders => {
+              this.packages = orders;
+              this.packages.forEach(order => {
+                if(order.orderStatus === 'IN_DELIVERY') {
+                  order.orderStatus = 'In delivery';
+                } else if (order.orderStatus === 'ARRIVED') {
+                  order.orderStatus = 'Arrived';
+                } else {
+                  order.orderStatus = 'Waiting for courier';
+                };
+              });
             });
-          });
-
-      });
-    }
-
+        });
+      }
+    });
   }
   navigateToDeliveryTracking() {
     this.router.navigate(['/tracking-search/']);

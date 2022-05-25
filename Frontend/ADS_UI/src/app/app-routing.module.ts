@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -26,7 +26,8 @@ const routes: Routes = [
   {
     path: 'order-details/:id/:orderCode',
     loadChildren: () => import('./order-details/order-details.module').then( m => m.OrderDetailsPageModule)
-  },  {
+  },
+  {
     path: 'tracking-search',
     loadChildren: () => import('./tracking-search/tracking-search.module').then( m => m.TrackingSearchPageModule)
   },
