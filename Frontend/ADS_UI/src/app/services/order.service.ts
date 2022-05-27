@@ -29,7 +29,15 @@ export class OrderService {
 
     return this.http.get<OrderPreview[]>(url, options);
   }
+  getOrderInfo(id: string): Observable<OrderPreview> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
+    const options = { headers, withCredintials: false};
+    const url = environment.apiUrl + 'api/order/info/' + id;
+
+    return this.http.get<OrderPreview>(url, options);
+  }
   getOrder(id: string): Observable<OrderDetailed> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const headers = new HttpHeaders({'Content-Type': 'application/json'});

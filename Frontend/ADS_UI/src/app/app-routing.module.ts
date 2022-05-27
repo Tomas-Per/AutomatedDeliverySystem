@@ -31,6 +31,11 @@ const routes: Routes = [
     path: 'tracking-search',
     loadChildren: () => import('./tracking-search/tracking-search.module').then( m => m.TrackingSearchPageModule)
   },
+  {
+    path: 'tracking-details/:id/:orderCode',
+    loadChildren: () => import('./tracking-details/tracking-details.module').then( m => m.TrackingDetailsPageModule)
+  },
+
 
 
 
