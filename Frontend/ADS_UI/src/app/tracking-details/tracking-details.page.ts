@@ -27,6 +27,7 @@ export class TrackingDetailsPage implements OnInit {
     this.orderService.getOrder(id)
       .subscribe(data => {
         this.order = data;
+        this.orderService.orderOptLockVersion = this.order.optLockVersion;
         this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-MM-dd');
         this.order.date = this.datePipe.transform(this.order.date, 'yyyy-MM-dd');
         this.orderService.getOrderInfo(id).subscribe(info => {
@@ -45,13 +46,14 @@ export class TrackingDetailsPage implements OnInit {
 
     await modal.present();
 
-    const {data :newData, role} = await modal.onWillDismiss();
+    const {role} = await modal.onWillDismiss();
     if (role === 'updated') {
       const id = this.activatedRoute.snapshot.paramMap.get('id');
 
       this.orderService.getOrder(id)
         .subscribe(data => {
           this.order = data;
+          this.orderService.orderOptLockVersion = this.order.optLockVersion;
           this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-MM-dd');
           this.order.date = this.datePipe.transform(this.order.date, 'yyyy-MM-dd');
         });

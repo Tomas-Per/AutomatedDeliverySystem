@@ -76,4 +76,8 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderInfo> orderInfoList;
 
+    @Version
+    @Column
+    private Integer optLockVersion;
+
 }

@@ -26,6 +26,7 @@ public class OrderView {
     private Date convenientArrivalTimeTo;
     private AddressView sourceAddress;
     private AddressView destinationAddress;
+    private Integer optLockVersion;
     public static OrderView of(Order order) {
         return OrderView.builder()
                 .id(order.getId())
@@ -40,6 +41,7 @@ public class OrderView {
                 .convenientArrivalTimeTo(order.getConvenientArrivalTimeTo())
                 .sourceAddress(AddressView.of(order.getSourceAddress()))
                 .destinationAddress(AddressView.of(order.getDestinationAddress()))
+                .optLockVersion(order.getOptLockVersion())
                 .build();
     }
 }

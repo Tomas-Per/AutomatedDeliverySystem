@@ -1,4 +1,3 @@
-import { Address } from './address';
 import { AddressPreview } from './addressPreview';
 import { Size } from './size';
 
@@ -15,4 +14,5 @@ export class OrderDetailed {
   convenientArrivalTimeTo: string;
   sourceAddress: AddressPreview;
   destinationAddress: AddressPreview;
+  optLockVersion: number;
 }

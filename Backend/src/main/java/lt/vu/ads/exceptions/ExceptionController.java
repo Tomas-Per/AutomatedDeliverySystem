@@ -44,6 +44,11 @@ public class ExceptionController {
         return handleException(ex, HttpStatus.CONFLICT, request);
     }
 
+    @ExceptionHandler(value = {CustomOptimisticLockException.class})
+    public ResponseEntity<Object> handleCustomOptimisticLockException(CustomOptimisticLockException ex, WebRequest request) {
+        return handleException(ex, HttpStatus.PRECONDITION_FAILED, request);
+    }
+
     private ResponseEntity<Object> handleException(Exception e, HttpStatus status, WebRequest request) {
         String message = "[" + request.toString() + "] " + e.getMessage();
         if (status == HttpStatus.INTERNAL_SERVER_ERROR) {

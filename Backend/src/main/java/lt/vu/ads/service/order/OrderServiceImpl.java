@@ -3,6 +3,7 @@ package lt.vu.ads.service.order;
 import lombok.RequiredArgsConstructor;
 import lt.vu.ads.constants.PriceConstants;
 import lt.vu.ads.exceptions.BadRequestException;
+import lt.vu.ads.exceptions.CustomOptimisticLockException;
 import lt.vu.ads.exceptions.NotFoundException;
 import lt.vu.ads.models.address.Address;
 import lt.vu.ads.models.order.Order;
@@ -16,6 +17,7 @@ import lt.vu.ads.repositories.UserRepository;
 import lt.vu.ads.service.order.utils.*;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OptimisticLockException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -86,6 +88,9 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findOneById(orderId);
         if (order == null) {
             throw new NotFoundException("Order is not found with id: " + orderId);
+        }
+        if (!order.getOptLockVersion().equals(orderDetails.getOptLockVersion())) {
+            throw new CustomOptimisticLockException("Older version of order exists");
         }
         if (orderDetails.getConvenientArrivalTimeTo() == null || orderDetails.getConvenientArrivalTimeFrom() == null) {
             throw new BadRequestException("Order time is empty ");
