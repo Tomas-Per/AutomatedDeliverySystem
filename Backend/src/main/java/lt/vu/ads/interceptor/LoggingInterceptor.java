@@ -1,31 +1,24 @@
 package lt.vu.ads.interceptor;
 
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lt.vu.ads.models.LogEntry;
-import lt.vu.ads.models.address.Address;
-import lt.vu.ads.repositories.AddressRepository;
 import lt.vu.ads.repositories.LogRepository;
 import lt.vu.ads.service.SpringContext;
-import org.springframework.boot.SpringApplication;
-import org.springframework.orm.hibernate5.SpringSessionContext;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
-import java.util.Enumeration;
 
 public class LoggingInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
+        if (request.getMethod().equals(HttpMethod.OPTIONS.toString())) {
+            return true;
+        }
         HandlerMethod method = (HandlerMethod) handler;
         String methodName = method.getMethod().toString();
         String ipAddress = getRemoteAddr(request);
