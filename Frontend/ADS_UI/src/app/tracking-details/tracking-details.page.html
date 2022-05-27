@@ -33,21 +33,6 @@
         <ion-col>Express</ion-col>
         <ion-col>{{order.isExpress ? "Yes" : "No"}}</ion-col>
       </ion-row>
-      <div class="sep"></div>
-      <ion-row class="row">
-        <ion-col>Fragile</ion-col>
-        <ion-col>{{order.isFragile ? "Yes" : "No"}}</ion-col>
-      </ion-row>
-      <div class="sep"></div>
-      <ion-row class="row">
-        <ion-col>Size</ion-col>
-        <ion-col>{{order.size}}</ion-col>
-      </ion-row>
-      <div class="sep"></div>
-      <ion-row class="row">
-        <ion-col>Delivery price</ion-col>
-        <ion-col>{{order.price | currency:'EUR':true}}</ion-col>
-      </ion-row>
       <div style="margin-bottom: 15px;" class="sep"></div>
       <ion-row class="row">
         <ion-col class="addressText">To:</ion-col>
@@ -67,10 +52,18 @@
       </ion-row>
       <div style="margin-top: 10px;" class="sep"></div>
       <ion-row class="row">
-        <ion-col>Estimated delivery time</ion-col>
+        <ion-col>Estimated delivery date</ion-col>
         <ion-col>{{order.estimatedArrivalTime}}</ion-col>
+      </ion-row>
+      <div style="margin-top: 10px;" class="sep"></div>
+      <ion-row class="row" *ngIf="orderService.orderStatus === 'IN_DELIVERY'">
+        <ion-col>Convenient arrival time</ion-col>
+        <ion-col>{{order.convenientArrivalTimeFrom | date: 'H:mm'  }} -  {{order.convenientArrivalTimeTo | date: 'H:mm'  }}</ion-col>
       </ion-row>
 
     </ion-grid>
+  </div>
+  <div *ngIf="orderService.orderStatus === 'IN_DELIVERY'">
+    <ion-button class="justifyContent" id="open-modal" (click)="openTimePickerModal()">Change convenient time</ion-button>
   </div>
 </ion-content>

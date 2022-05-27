@@ -1,17 +1,17 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderDetailed } from '../models/orderDetailed';
-import { OrderService } from '../services/order.service';
-import { DatePipe } from '@angular/common';
 import { ModalController } from '@ionic/angular';
 import { ChangeTimeModalComponent } from '../change-time-modal/change-time-modal.component';
+import { OrderDetailed } from '../models/orderDetailed';
+import { OrderService } from '../services/order.service';
 
 @Component({
-  selector: 'app-order-details',
-  templateUrl: './order-details.page.html',
-  styleUrls: ['./order-details.page.scss'],
+  selector: 'app-tracking-details',
+  templateUrl: './tracking-details.page.html',
+  styleUrls: ['./tracking-details.page.scss'],
 })
-export class OrderDetailsPage implements OnInit {
+export class TrackingDetailsPage implements OnInit {
 
   order: OrderDetailed;
 
@@ -26,13 +26,12 @@ export class OrderDetailsPage implements OnInit {
 
     this.orderService.getOrder(id)
       .subscribe(data => {
-        console.log(data);
         this.order = data;
-        this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-MM-dd, h:mm a');
+        this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-MM-dd');
         this.order.date = this.datePipe.transform(this.order.date, 'yyyy-MM-dd');
         this.orderService.getOrderInfo(id).subscribe(info => {
-          this.orderService.orderStatus = info.orderStatus;
-      });
+            this.orderService.orderStatus = info.orderStatus;
+        });
       });
   }
 
@@ -45,6 +44,19 @@ export class OrderDetailsPage implements OnInit {
     });
 
     await modal.present();
+
+    const {data :newData, role} = await modal.onWillDismiss();
+    if (role === 'updated') {
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
+
+      this.orderService.getOrder(id)
+        .subscribe(data => {
+          this.order = data;
+          this.order.estimatedArrivalTime = this.datePipe.transform(this.order.estimatedArrivalTime, 'yyyy-MM-dd');
+          this.order.date = this.datePipe.transform(this.order.date, 'yyyy-MM-dd');
+        });
+    }
+
   }
 
 }

@@ -8,9 +8,10 @@ import { ToastService } from '../services/toast.service';
   templateUrl: './tracking-search.page.html',
   styleUrls: ['./tracking-search.page.scss'],
 })
+
 export class TrackingSearchPage implements OnInit {
   opts= ['', '', '', '', '', '', '', ''];
-
+  isDeleted = false;
   constructor(
     private router: Router,
     public orderService: OrderService,
@@ -24,18 +25,21 @@ export class TrackingSearchPage implements OnInit {
   }
 
   next(el) {
+    if(!this.isDeleted){
     el.setFocus();
     const str = this.opts.join('');
-    if(str.length === 8) { this.track();}
+    if(str.length === 8) {
+       this.track();}
+    }
+    else { this.isDeleted = false;}
   }
 
   track() {
     const str = this.opts.join('');
     this.orderService.getOrderByCode(str).subscribe( res => {
       if(res){
-        this.router.navigate(['/order-details/'+res.id+'/'+res.orderCode]);
+        this.router.navigate(['/tracking-details/'+res.id+'/'+res.orderCode]);
       }
-      else{this.toastService.presentToast('Order not found, check if the order code is correct');}
     },(error: any) => {
       this.toastService.presentToast('Order not found, check if the order code is correct');
     });
