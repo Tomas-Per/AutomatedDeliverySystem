@@ -6,6 +6,8 @@ import lt.vu.ads.models.orderInfo.OrderInfo;
 import lt.vu.ads.models.orderInfo.json.OrderInfoView;
 import lt.vu.ads.models.user.json.UserEmailView;
 import lt.vu.ads.service.order.OrderService;
+import org.apache.catalina.core.ApplicationContext;
+import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
