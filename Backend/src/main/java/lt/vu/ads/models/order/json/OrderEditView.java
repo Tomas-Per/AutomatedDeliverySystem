@@ -10,4 +10,5 @@ import java.util.Date;
 public class OrderEditView {
     private Date convenientArrivalTimeFrom;
     private Date convenientArrivalTimeTo;
+    private Integer optLockVersion;
 }

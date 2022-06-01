@@ -12,9 +12,9 @@
 </ion-header>
 <ion-content>
   <ion-label class="headerModal"><h1>FROM</h1></ion-label>
-  <ion-datetime presentation="time" minuteValues="0,15,30,45" class="justifyContent" [(ngModel)]="editableDate.convenientArrivalTimeFrom"></ion-datetime>
+  <ion-datetime presentation="time" minuteValues="0,15,30,45" hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20" class="justifyContent" [(ngModel)]="editableDate.convenientArrivalTimeFrom"></ion-datetime>
   <ion-label class="headerModal"><h1>TO</h1></ion-label>
-  <ion-datetime presentation="time" minuteValues="0,15,30,45" class="justifyContent" [(ngModel)]="editableDate.convenientArrivalTimeTo"></ion-datetime>
+  <ion-datetime presentation="time" minuteValues="0,15,30,45" hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20" class="justifyContent" [(ngModel)]="editableDate.convenientArrivalTimeTo"></ion-datetime>
   <ion-row>
     <ion-col class="justifyContent"><ion-button (click)="dismissModal()">Close</ion-button></ion-col>
     <ion-col class="justifyContent"><ion-button (click)="saveTime()">Save</ion-button></ion-col>

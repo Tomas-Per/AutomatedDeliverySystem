@@ -14,6 +14,7 @@ import { EditOrder } from '../models/editOrder';
 export class OrderService {
 
   orderStatus: string;
+  orderOptLockVersion: number;
 
   constructor(
     private http: HttpClient
@@ -29,7 +30,15 @@ export class OrderService {
 
     return this.http.get<OrderPreview[]>(url, options);
   }
+  getOrderInfo(id: string): Observable<OrderPreview> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
+    const options = { headers, withCredintials: false};
+    const url = environment.apiUrl + 'api/order/info/' + id;
+
+    return this.http.get<OrderPreview>(url, options);
+  }
   getOrder(id: string): Observable<OrderDetailed> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
@@ -58,8 +67,7 @@ export class OrderService {
     return this.http.post<OrderPreviewFull>(url, JSON.stringify(postData), options);
   }
   postOrder(postData: OrderPreviewFull):  Observable<OrderDetailed> {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const headers = new HttpHeaders({'content-type': 'application/json'});
 
     const options = { headers, withCredintials: false};
     const url = environment.apiUrl + 'api/orders';
@@ -67,8 +75,7 @@ export class OrderService {
     return this.http.post<OrderDetailed>(url, JSON.stringify(postData), options);
   }
   editOrder(id: string, postData: EditOrder):  Observable<OrderDetailed> {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const headers = new HttpHeaders({'content-type': 'application/json'});
 
     const options = { headers, withCredintials: false};
     const url = environment.apiUrl + 'api/order/'+id;
