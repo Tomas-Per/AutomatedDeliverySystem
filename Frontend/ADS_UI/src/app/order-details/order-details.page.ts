@@ -31,6 +31,13 @@ export class OrderDetailsPage implements OnInit {
         this.order.date = this.datePipe.transform(this.order.date, 'yyyy-MM-dd');
         this.orderService.getOrderInfo(id).subscribe(info => {
           this.orderService.orderStatus = info.orderStatus;
+          if(this.orderService.orderStatus === 'IN_DELIVERY') {
+            this.orderService.orderStatus = 'In delivery';
+          } else if (this.orderService.orderStatus === 'ARRIVED') {
+            this.orderService.orderStatus = 'Arrived';
+          } else {
+            this.orderService.orderStatus = 'Waiting for courier';
+          };
       });
       });
   }

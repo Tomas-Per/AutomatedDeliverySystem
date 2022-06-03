@@ -56,14 +56,14 @@
         <ion-col>{{order.estimatedArrivalTime}}</ion-col>
       </ion-row>
       <div style="margin-top: 10px;" class="sep"></div>
-      <ion-row class="row" *ngIf="orderService.orderStatus === 'IN_DELIVERY'">
+      <ion-row class="row" *ngIf="orderService.orderStatus === 'In delivery'">
         <ion-col>Convenient arrival time</ion-col>
         <ion-col>{{order.convenientArrivalTimeFrom | date: 'H:mm'  }} -  {{order.convenientArrivalTimeTo | date: 'H:mm'  }}</ion-col>
       </ion-row>
 
     </ion-grid>
   </div>
-  <div *ngIf="orderService.orderStatus === 'IN_DELIVERY'">
+  <div *ngIf="orderService.orderStatus === 'In delivery'">
     <ion-button class="justifyContent" id="open-modal" (click)="openTimePickerModal()">Change convenient time</ion-button>
   </div>
 </ion-content>
